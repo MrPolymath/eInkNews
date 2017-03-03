@@ -1,0 +1,16 @@
+{
+  "name": "epub-to-html",
+  "version": "1.0.0",
+  "description": "epub-to-html",
+  "main": "index.js",
+  "dependencies": {
+    "epub-gen": "0.0.17",
+    "htmlparser2": "^3.9.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
