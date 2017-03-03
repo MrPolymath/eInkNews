@@ -5,23 +5,15 @@
   padding-bottom: 150px;
   min-height: 100%;
 }
-.textColumn {
-
-}
-.imageColumn {
-
-}
 .heroImage {
   display:block;
   margin:auto;
 }
-
 .primaryText {
-  color: #ffffff;
+  color: #FEC007;
   font-size: 45px;
   font-weight: 400;
 }
-
 .secondaryText {
   color: #ffffff;
   font-size: 30px;
@@ -31,18 +23,11 @@
   .buttonContainer {
     margin: auto;
   }
-
   .textColumn {
     margin-bottom: 80px;
   }
-
   .heroImage {
     width: 250px;
-  }
-  .aclaracionContainer {
-    text-align: center;
-    max-width: 300px;
-    margin: auto;
   }
 }
 
@@ -53,12 +38,4 @@
     padding-top: 100px;
     padding-bottom: 50px;
   }
-}
-.aclaracionContainer {
-  text-align: center;
-  max-width: 300px;
-}
-.aclaracionDebajoBoton {
-  color: rgb(144, 166, 176);
-  font-size: 14px;
 }
