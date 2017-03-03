@@ -1,0 +1,64 @@
+.mainDiv {
+  background-color: #0A131E;
+  font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+  padding-top: 200px;
+  padding-bottom: 150px;
+  min-height: 100%;
+}
+.textColumn {
+
+}
+.imageColumn {
+
+}
+.heroImage {
+  display:block;
+  margin:auto;
+}
+
+.primaryText {
+  color: #ffffff;
+  font-size: 45px;
+  font-weight: 400;
+}
+
+.secondaryText {
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 300;
+}
+@media (max-width: 1024px) {
+  .buttonContainer {
+    margin: auto;
+  }
+
+  .textColumn {
+    margin-bottom: 80px;
+  }
+
+  .heroImage {
+    width: 250px;
+  }
+  .aclaracionContainer {
+    text-align: center;
+    max-width: 300px;
+    margin: auto;
+  }
+}
+
+@media (max-width: 500px) {
+  .mainDiv {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 100px;
+    padding-bottom: 50px;
+  }
+}
+.aclaracionContainer {
+  text-align: center;
+  max-width: 300px;
+}
+.aclaracionDebajoBoton {
+  color: rgb(144, 166, 176);
+  font-size: 14px;
+}
