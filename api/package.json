@@ -1,7 +1,8 @@
 {
   "name": "einknews-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Get your favourite news on your ebook",
+  "repository": "https://github.com/MrPolymath/eInkNews",
   "main": "dist",
   "scripts": {
     "dev": "nodemon -w src --exec \"babel-node src --presets es2015,stage-0\"",
