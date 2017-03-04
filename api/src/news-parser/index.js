@@ -4,8 +4,8 @@ import kindlegen from 'kindlegen'
 import Nightmare from 'nightmare'
 import fs from 'fs'
 import tmp from 'tmp'
-import sources from '../config/sources.json'
 
+import sources from '../config/sources.json'
 import modules from './modules'
 
 const createEbook  = function(params) {
@@ -22,16 +22,11 @@ const createEbook  = function(params) {
   })
 
   // Works with only one domain for now
-  // const key = filteredSources[0].key
-  // const url = filteredSources[0].value
-  const key = 'hackernews'
-  const url = 'http://news.ycombinator.com'
-  console.log(key);
-  console.log(url);
+  const key = filteredSources[0].key
+  const url = filteredSources[0].value
 
   const htmlPath = tmp.tmpNameSync()
-  // const epubPath = tmp.tmpNameSync()
-  const epubPath = './output.epub'
+  const epubPath = tmp.tmpNameSync()
 
   return new Promise((resolve, reject) => {
     nightmare
