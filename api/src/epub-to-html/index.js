@@ -3,7 +3,6 @@ var Nightmare = require('nightmare');
 var nightmare = Nightmare();
 var fs = require('fs');
 import modules from './modules';
-import nytimesParser from './modules/nytimes'
 const epubToHtml = function(url) {
 
   const HTML_PATH = process.env.HTML_PATH;
@@ -52,7 +51,7 @@ const epubToHtml = function(url) {
 
 export default epubToHtml
 
-// 
+//
 // content ={
 //
 //     {titulo:
