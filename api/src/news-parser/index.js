@@ -38,7 +38,6 @@ const createEbook  = function(params) {
           const ebook = String(fs.readFileSync(htmlPath, { encoding: 'utf8' }))
           modules()[key](ebook)
             .then((content) => {
-              console.log(content)
               const options = {
                   title: day + '-' + month + '-' + key,
                   author: url,
