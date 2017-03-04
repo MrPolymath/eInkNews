@@ -7,7 +7,7 @@ import { combineReducers } from 'redux'
 const defaultLandingState = {
   email: '',
   subscriptions: [],
-  submited: true,
+  submited: false,
   url: '',
   device: ''
 }
