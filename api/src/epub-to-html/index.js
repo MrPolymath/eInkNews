@@ -3,7 +3,7 @@ var Nightmare = require('nightmare');
 var nightmare = Nightmare();
 var fs = require('fs');
 import modules from './modules';
-
+import nytimesParser from './modules/nytimes'
 const epubToHtml = function(url) {
 
   const HTML_PATH = process.env.HTML_PATH;
@@ -12,7 +12,8 @@ const epubToHtml = function(url) {
   const date = new Date();
   const day = date.getDate();
   const month = (date.getMonth()) + 1;
-  const domain = url.split('.');
+  const domain2 = url.split('.');
+  const domain = domain2[0].split('//')
 
   nightmare
     .goto(url)
@@ -20,7 +21,7 @@ const epubToHtml = function(url) {
     .html(HTML_PATH, 'HTMLOnly')
     .then(function () {
       const ebook = fs.readFileSync(HTML_PATH,{encoding: 'utf8'}).toString();
-      const result = modules[domain[0]](ebook,(content) => {
+      modules()[domain[1]](ebook,(content) => {
         var option = {
               title: day + '-' + month + '-' + domain, // *Required, title of the book.
               author: url, // *Required, name of the author.
@@ -32,7 +33,7 @@ const epubToHtml = function(url) {
                         `{
                             title: ${i.title} ,
                             data: ${i.text},
-                        },`
+                        }, `
                     )
                   })
               ]
@@ -42,7 +43,7 @@ const epubToHtml = function(url) {
          }, function(err){
             console.error("Failed to generate Ebook because of ", err)
         })
-      })()
+      })
     })
     .catch(function (error) {
       console.error('Search failed:', error);
@@ -50,3 +51,15 @@ const epubToHtml = function(url) {
 }
 
 export default epubToHtml
+
+// 
+// content ={
+//
+//     {titulo:
+//     texto:}
+//
+//     {titulo:
+//     texto:},
+//
+//
+// }
