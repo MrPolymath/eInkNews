@@ -14,53 +14,50 @@ const nytimesParser = function(epub){
     var articleTitle = []
     var final_response = []
     var counter = 0
-      for (var i = 0; i < articles.length;  i++) {
-        if (regex_url.exec(articles[i]) !== null && regex_title.exec(articles[i]) !== null) {
-            articleUrl[counter] = regex_url.exec(articles[i])[1].toString().concat('.html')
-            articleTitle[counter] = regex_title.exec(articles[i])[1].replace('\n','')
-            console.log('web: ',articleUrl[counter], 'titulo: ',articleTitle[counter])
-            counter++
-          }
-      }
-    // console.log(counter)
-    var deleteFolderRecursive = function(path) {
-          if( fs.existsSync(path) ) {
-            fs.readdirSync(path).forEach(function(file){
-              var curPath = path + "/" + file
-              // recurse
-              if(fs.lstatSync(curPath).isDirectory()) {
-                deleteFolderRecursive(curPath)
-              } else {
-                // delete file
-                fs.unlinkSync(curPath)
-              }
-            })
-            fs.rmdirSync(path)
-          }
+    for (var i = 0; i < articles.length;  i++) {
+      if (regex_url.exec(articles[i]) !== null && regex_title.exec(articles[i]) !== null) {
+          articleUrl[counter] = regex_url.exec(articles[i])[1].toString().concat('.html')
+          articleTitle[counter] = regex_title.exec(articles[i])[1].replace('\n','')
+          counter++
         }
-      var html_article = ''
-      deleteFolderRecursive('./file')
-      articleTitle.map((article,i) => {
-      // fs.unlink(`./file${i}.html`)
-      scrape({
+    }
+
+    var deleteFolderRecursive = function(path) {
+      if( fs.existsSync(path) ) {
+        fs.readdirSync(path).forEach(function(file){
+          var curPath = path + "/" + file
+          // recurse
+          if(fs.lstatSync(curPath).isDirectory()) {
+            deleteFolderRecursive(curPath)
+          } else {
+            // delete file
+            fs.unlinkSync(curPath)
+          }
+        })
+        fs.rmdirSync(path)
+      }
+    }
+
+    var html_article = ''
+    deleteFolderRecursive('./file')
+    const articlePromises = articleTitle.map((article, i) => {
+      return scrape({
         urls: [articleUrl[i]],
         directory: `./file/file${i}.html`,
         recursive: false,
         maxDepth: 1
-      }).then(function(){
-        // console.log(result.match(regex_final))
-        html_article = fs.readFileSync(`./file/file${i}.html/index.html`,{ encoding: 'utf8' }).toString()
-        const p_article = html_article.match(regex_final)
-        const p_article_final = p_article.toString()
-        // console.log(html_article)
-        const final_article = '<h1>'+ article +'</h1><br/>'+ p_article_final
-        // console.log(final_article)
-        final_response = final_response.push({ title:article ,data:final_article })
-        return resolve(final_response)
-      }).catch(function (err) {
-        return reject(err)
       })
+        .then(function(){
+          html_article = fs.readFileSync(`./file/file${i}.html/index.html`,{ encoding: 'utf8' }).toString()
+          const p_article = html_article.match(regex_final)
+          const p_article_final = p_article ? p_article.join('') : ''
+          final_response.push({ title: article, data: p_article_final })
+        })
+        .catch(function (err) {
+          return reject(err)
+        })
     })
+    Promise.all(articlePromises).then(() => resolve(final_response))
   })
 }
 
