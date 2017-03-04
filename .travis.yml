@@ -4,14 +4,16 @@ services:
 script:
   - pip install --user awscli # install aws cli w/o sudo
   - export PATH=$PATH:$HOME/.local/bin # put aws in the path
+  - curl -L https://github.com/docker/machine/releases/download/v0.10.0/docker-machine-`uname -s`-`uname -m` >./docker-machine
+  - chmod +x ./docker-machine
+  - docker-machine ls
   - eval $(aws ecr get-login --region eu-west-2) #needs AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY envvars
+  - eval $(./docker-machine env einknews-api)
+  - docker-machine ls
   - cd api
   - docker build -t einknews/api .
   - docker tag einknews/api:latest 239540767450.dkr.ecr.eu-west-2.amazonaws.com/einknews/api:latest
   - docker push 239540767450.dkr.ecr.eu-west-2.amazonaws.com/einknews/api:latest
-  - curl -L https://github.com/docker/machine/releases/download/v0.10.0/docker-machine-`uname -s`-`uname -m` >./docker-machine
-  - chmod +x ./docker-machine
-  - eval $(./docker-machine env einknews-api)
   - docker rm einknews-api
   - >
     docker run
