@@ -2,23 +2,18 @@
   "sources": [
     {
       "key": "hackernews",
-      "value": "https://news.ycombinator.com"
+      "name": "Hacker News",
+      "url": "https://news.ycombinator.com"
     },
     {
       "key": "nytimes",
-      "value": "http://nytimes.com"
-    },
-    {
-      "key": "bbc",
-      "value": "http://bbc.com/news"
+      "name": "New York Times",
+      "url": "http://nytimes.com"
     },
     {
       "key": "elmundo",
-      "value": "http://elmundo.es"
-    },
-    {
-      "key": "lavanguardia",
-      "value": "http://lavanguardia.com"
+      "name": "El Mundo",
+      "url": "http://elmundo.es"
     }
   ]
 }
