@@ -44,7 +44,7 @@ const createEbook  = function(params) {
                     content.map((i) => {
                         return(
                           `{
-                              title: ${i.title} ,
+                              title: ${i.title},
                               data: ${i.text},
                           }, `
                       )
