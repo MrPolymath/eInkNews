@@ -11,19 +11,9 @@
       "url": "http://nytimes.com"
     },
     {
-      "key": "bbc",
-      "name": "BBC News",
-      "url": "http://bbc.com/news"
-    },
-    {
       "key": "elmundo",
       "name": "El Mundo",
       "url": "http://elmundo.es"
-    },
-    {
-      "key": "lavanguardia",
-      "name": "La Vanguardia",
-      "url": "http://lavanguardia.com"
     }
   ]
 }
