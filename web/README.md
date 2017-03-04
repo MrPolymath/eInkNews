@@ -8,7 +8,9 @@ Structure based on [Redux Real World Example](https://github.com/facebookincubat
 
 Simply run:
 
-`npm install`
+### `npm install`
+
+Copy the `.env.example` as `.env` and put your own enviromental variables.
 
 ## Available Scripts
 
