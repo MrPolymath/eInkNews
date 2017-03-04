@@ -23,7 +23,7 @@ const createEbook  = function(params) {
 
   // Works with only one domain for now
   const key = filteredSources[0].key
-  const url = filteredSources[0].value
+  const url = filteredSources[0].url
 
   const htmlPath = tmp.tmpNameSync()
   const epubPath = tmp.tmpNameSync()
