@@ -35,8 +35,8 @@ userRoutes.post('/', (req, res) => {
           user
             .save()
             .then(user => createEbook(user))
-            .then((ebookPath, user) => uploadToS3(ebookPath, user))
-            .then(user => res.json(user.getBundleUrl()))
+            .then(ebookPath => uploadToS3(ebookPath, user))
+            .then(() => res.json(user.getBundleUrl()))
 
         }
       }

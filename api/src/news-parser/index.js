@@ -24,69 +24,59 @@ const createEbook  = function(params) {
   // Works with only one domain for now
   const key = filteredSources[0].key
   const url = filteredSources[0].value
+  console.log(key);
+  console.log(url);
 
   const htmlPath = tmp.tmpNameSync()
   const epubPath = tmp.tmpNameSync()
 
-  const promise = new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     nightmare
       .goto(url)
       .end()
       .html(htmlPath, 'HTMLOnly')
       .then(() => {
-        const ebook = fs.readFileSync(htmlPath,{ encoding: 'utf8' }).toString()
-        console.log(key);
-        const promise = new Promise((resolve, reject) => {
-          modules()[key](ebook, (content) => {
-            const options = {
-                title: day + '-' + month + '-' + key,
-                author: url,
-                publisher: url,
-                cover: `${url}/favicon.ico`,
-                content: [
-                    content.map((i) => {
-                        return(
-                          `{
-                              title: ${i.title},
-                              data: ${i.text},
-                          }, `
-                      )
-                    })
-                ]
-            }
-            return new Epub(options, epubPath).promise
-              .then(function() {
-                  return resolve(epubPath, params)
-               }, function(err) {
-                  return reject(err)
-              })
-          })
+        return new Promise((resolve, reject) => {
+          const ebook = fs.readFileSync(htmlPath,{ encoding: 'utf8' }).toString()
+          modules()[key](ebook)
+            .then((content) => {
+              const options = {
+                  title: day + '-' + month + '-' + key,
+                  author: url,
+                  publisher: url,
+                  cover: `${url}/favicon.ico`,
+                  content
+              }
+              new Epub(options, epubPath).promise
+                .then(function() {
+                    return resolve(epubPath)
+                 }, function(err) {
+                    return reject(err)
+                })
+            })
         })
-        return promise
       })
-      .then((epubPath, params) => {
+      .then((epubPath) => {
         switch(params.bundleType) {
           case 'mobi': {
             const mobiPath = tmp.tmpNameSync()
             kindlegen(fs.readFileSync(epubPath), (err, mobi) => {
               fs.writeFile(mobiPath, mobi, (err) => {
                 if (err) throw err
-                return resolve(mobiPath, params)
+                return resolve(mobiPath)
               })
             })
             break
           }
           case 'epub':
           default:
-            return resolve(epubPath, params)
+            return resolve(epubPath)
         }
       })
       .catch(function (err) {
         return reject(err)
       })
   })
-
-  return promise
 }
 
 export default createEbook

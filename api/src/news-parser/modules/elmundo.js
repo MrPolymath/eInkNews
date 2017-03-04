@@ -2,7 +2,7 @@ import jsdom from 'jsdom'
 import Promise from 'bluebird'
 
 function getArticleContent(article) {
-  const promise = new Promise((resolve) => {
+  return new Promise((resolve) => {
     jsdom.env({
       url: article.link,
       scripts: ["http://code.jquery.com/jquery.js"],
@@ -20,31 +20,32 @@ function getArticleContent(article) {
       }
     })
   })
-  return promise
 }
 
-const elmundo = function(ebook, callback) {
-  jsdom.env(
-    ebook,
-    ["http://code.jquery.com/jquery.js"],
-    function (err, window) {
-      var $ = window.$
-      var articles = []
-      $(".flex__item h3").each(function() {
-        var title = $(this).text()
-        var link = $(this).find('a').attr('href')
-        articles.push({title: title, link: link})
-      })
-      const articlePromises = articles.map(article => {
-        return getArticleContent(article).then(text => {
-          article.text = text.split('<h3 class="list-header"><span>')[0]
-          delete article.link
-          return article
+const elmundo = function(ebook) {
+  return new Promise((resolve) => {
+    jsdom.env(
+      ebook,
+      ["http://code.jquery.com/jquery.js"],
+      function (err, window) {
+        var $ = window.$
+        var articles = []
+        $(".flex__item h3").each(function() {
+          var title = $(this).text()
+          var link = $(this).find('a').attr('href')
+          articles.push({title: title, link: link})
         })
-      })
-      Promise.all(articlePromises).then(articles => callback(articles))
-    }
-  )
+        const articlePromises = articles.map(article => {
+          return getArticleContent(article).then(text => {
+            article.data = text.split('<h3 class="list-header"><span>')[0]
+            delete article.link
+            return article
+          })
+        })
+        Promise.all(articlePromises).then(articles => resolve(articles))
+      }
+    )
+  })
 }
 
 export default elmundo
