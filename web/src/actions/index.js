@@ -7,11 +7,12 @@ export const CLOSE_DIALOG = 'CLOSE_DIALOG'
 
 export const submitForm = (email, subscriptions, device) => {
   const bundleType = device === 'Kindle' ? 'mobi' : 'epub'
-  const parsedSubscriptions = subscriptions.map((sub) => (
-    sub.key
-  ))
+  let parsedSubscriptions = subscriptions.map((sub) => (
+      sub.key
+    ))
   return {
     type: SUBMIT_FORM,
+    endpoint: 'http://www.ourapi.com/submit-form',
     payload: {
       email: email,
       subscriptions: parsedSubscriptions,

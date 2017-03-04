@@ -19,7 +19,7 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    submitForm: (data) => dispatch(submitForm(data)),
+    submitForm: (email, subscriptions, device) => dispatch(submitForm(email, subscriptions, device)),
     addSubscription: (event, index, value) => dispatch(addSubscription(event, index, value)),
     deleteSubscription: (key) => dispatch(deleteSubscription(key)),
     selectDevice: (event, index, value) => dispatch(selectDevice(event, index, value)),
