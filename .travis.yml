@@ -1,0 +1,28 @@
+sudo: required
+services:
+  - docker
+script:
+  - pip install --user awscli # install aws cli w/o sudo
+  - export PATH=$PATH:$HOME/.local/bin # put aws in the path
+  - eval $(aws ecr get-login --region us-east-1) #needs AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY envvars
+  - docker build -t einknews/api .
+  - docker tag einknews/api:latest 239540767450.dkr.ecr.eu-west-2.amazonaws.com/einknews/api:latest
+  - docker push 239540767450.dkr.ecr.eu-west-2.amazonaws.com/einknews/api:latest
+  - eval $(docker-machine env einknews-api)
+  - docker rm einknews-api
+  - >
+    docker run
+    --name einknews-api
+    -p 80:80
+    --link mongo
+    -e MONGO_HOST=mongo
+    -e MONGO_PORT=27017
+    -e MONGO_DB_NAME=einknews
+    -e ROOT_URL=ec2-52-56-164-171.eu-west-2.compute.amazonaws.com/api
+    -e PORT=80
+    -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+    -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+    -e AWS_REGION=eu-west-2
+    -e S3_BUCKET=einknews
+    -d
+    239540767450.dkr.ecr.eu-west-2.amazonaws.com/einknews/api
