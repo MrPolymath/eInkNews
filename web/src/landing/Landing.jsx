@@ -6,7 +6,7 @@ import HeroLanding from './HeroLanding/HeroLanding'
 import GetLinkDialog from './GetLinkDialog/GetLinkDialog'
 
 // import actions
-import {submitForm, addSubscription, deleteSubscription, selectDevice, closeDialog} from  './../actions'
+import {submitForm, updateEmail, addSubscription, deleteSubscription, selectDevice, closeDialog} from  './../actions'
 
 const mapStateToProps = (state) => {
   return {
@@ -23,7 +23,8 @@ const mapDispatchToProps = (dispatch) => {
     addSubscription: (event, index, value) => dispatch(addSubscription(event, index, value)),
     deleteSubscription: (key) => dispatch(deleteSubscription(key)),
     selectDevice: (event, index, value) => dispatch(selectDevice(event, index, value)),
-    closeDialog: () => dispatch(closeDialog())
+    closeDialog: () => dispatch(closeDialog()),
+    updateEmail: (event) => dispatch(updateEmail(event))
   }
 }
 class Landing extends Component {
@@ -39,6 +40,7 @@ class Landing extends Component {
             deleteSubscription={this.props.deleteSubscription}
             selectDevice={this.props.selectDevice}
             device={this.props.device}
+            updateEmail={this.props.updateEmail}
           />
           {/* The following dialog controls if its open or not itself */}
           <GetLinkDialog url={this.props.url} open={this.props.submited} handleClose={this.props.closeDialog}/>
