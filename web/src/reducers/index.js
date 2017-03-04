@@ -7,8 +7,9 @@ import { combineReducers } from 'redux'
 const defaultLandingState = {
   email: '',
   subscriptions: [],
-  submited: false,
-  url: ''
+  submited: true,
+  url: '',
+  device: ''
 }
 const landing = (state = defaultLandingState, action) => {
   const { type, error, payload} = action
@@ -35,7 +36,8 @@ const landing = (state = defaultLandingState, action) => {
   }
   if (type === ActionTypes.RECEIVED_URL) {
     return merge({}, state, {
-      url: payload.url
+      url: payload.url,
+      submited: true
     })
   }
   if (type === ActionTypes.DELETE_SUBSCRIPTION) {
@@ -49,6 +51,16 @@ const landing = (state = defaultLandingState, action) => {
     newState.subscriptions = []
     return merge({}, newState, {
       subscriptions: newSubscriptions
+    })
+  }
+  if (type === ActionTypes.SELECT_DEVICE) {
+    return merge({}, state, {
+      device: payload.value
+    })
+  }
+  if (type === ActionTypes.CLOSE_DIALOG) {
+    return merge({}, state, {
+      submited: false
     })
   }
 
