@@ -35,30 +35,34 @@ const createEbook  = function(params) {
       .html(htmlPath, 'HTMLOnly')
       .then(() => {
         const ebook = fs.readFileSync(htmlPath,{ encoding: 'utf8' }).toString()
-        modules()[key](ebook, (content) => {
-          const option = {
-              title: day + '-' + month + '-' + key,
-              author: url,
-              publisher: url,
-              cover: `${url}/favicon.ico`,
-              content: [
-                  content.map((i) => {
-                      return(
-                        `{
-                            title: ${i.title},
-                            data: ${i.text},
-                        }, `
-                    )
-                  })
-              ]
-          }
-          new Epub(option, epubPath).promise
-            .then(() => {
-                return resolve(epubPath, params)
-             }, (err) => {
-                return reject(err)
-            })
+        console.log(key);
+        const promise = new Promise((resolve, reject) => {
+          modules()[key](ebook, (content) => {
+            const options = {
+                title: day + '-' + month + '-' + key,
+                author: url,
+                publisher: url,
+                cover: `${url}/favicon.ico`,
+                content: [
+                    content.map((i) => {
+                        return(
+                          `{
+                              title: ${i.title},
+                              data: ${i.text},
+                          }, `
+                      )
+                    })
+                ]
+            }
+            return new Epub(options, epubPath).promise
+              .then(function() {
+                  return resolve(epubPath, params)
+               }, function(err) {
+                  return reject(err)
+              })
+          })
         })
+        return promise
       })
       .then((epubPath, params) => {
         switch(params.bundleType) {
