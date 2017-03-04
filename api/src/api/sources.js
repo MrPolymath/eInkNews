@@ -1,10 +1,10 @@
 import { Router } from 'express'
 import sources from '../config/sources.json'
 
-let sourcesRoutes = Router()
+let sourceRoutes = Router()
 
-sourcesRoutes.get('/', (req, res) => {
+sourceRoutes.get('/', (req, res) => {
   res.json(sources)
 })
 
-export default sourcesRoutes
+export default sourceRoutes

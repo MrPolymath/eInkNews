@@ -1,10 +1,12 @@
 import { Router } from 'express'
+
 import User from '../models/User'
-import createEbook from '../helpers/create-ebook'
+import createEbook from '../news-parser'
+import uploadToS3 from '../helpers/upload-to-s3'
 
-const user = Router()
+const userRoutes = Router()
 
-user.post('/', (req, res) => {
+userRoutes.post('/', (req, res) => {
   const { email, subscriptions, bundleType } = req.body;
   if (!email || !subscriptions || !bundleType) {
     return res.json('you suck')
@@ -17,6 +19,7 @@ user.post('/', (req, res) => {
         newUser
           .save()
           .then(user => createEbook(user))
+          .then((ebookPath, user) => uploadToS3(ebookPath, user))
           .then(user => res.json(user.getBundleUrl()))
       } else {
         let modified = false
@@ -32,6 +35,7 @@ user.post('/', (req, res) => {
           user
             .save()
             .then(user => createEbook(user))
+            .then((ebookPath, user) => uploadToS3(ebookPath, user))
             .then(user => res.json(user.getBundleUrl()))
 
         }
@@ -42,4 +46,4 @@ user.post('/', (req, res) => {
     })
 })
 
-export default user
+export default userRoutes
