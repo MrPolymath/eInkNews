@@ -17,7 +17,7 @@ const epubToHtml = function(url) {
     .goto(url)
     .end()
     .html(HTML_PATH, 'HTMLOnly')
-    .then(function (result) {
+    .then(function () {
       const ebook = fs.readFileSync(HTML_PATH,{encoding: 'utf8'}).toString();
       var option = {
             title: day + '-' + month + '-' + url, // *Required, title of the book.
