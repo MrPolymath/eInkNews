@@ -3,10 +3,10 @@ import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 
 const subscriptions = [
-  <MenuItem key={'bbc'} value={'BBC'} primaryText="BBC" />,
-  <MenuItem key={'hackernews'} value={'Hacker News'} primaryText="Hacker News" />,
-  <MenuItem key={'elmundo'} value={'El mundo'} primaryText="El mundo" />,
-  <MenuItem key={'lavanguardia'} value={'La Vanguardia'} primaryText="La Vanguardia" />
+  <MenuItem key={'bbc'} name={'bbc'} value={'BBC'} primaryText="BBC" />,
+  <MenuItem key={'hackernews'} name={'hackernews'} value={'Hacker News'} primaryText="Hacker News" />,
+  <MenuItem key={'elmundo'} name={'elmundo'} value={'El mundo'} primaryText="El mundo" />,
+  <MenuItem key={'lavanguardia'} name={'lavanguardia'} value={'La Vanguardia'} primaryText="La Vanguardia" />
 ]
 
 const styles = {

@@ -20,6 +20,7 @@ const EmailInput = (props) => (
       floatingLabelText="email"
       floatingLabelStyle={styles.floatingLabelStyle}
       inputStyle={styles.inputStyle}
+      onChange={props.handleChange}
     />
   </div>
 );

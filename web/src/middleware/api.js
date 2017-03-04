@@ -16,6 +16,7 @@ const asyncCallsToApi = store => next => action => {
           if (err || !res.ok) {
           //  handle error calling API
           } else {
+            console.log(res.body);
             next({
                type: 'RECEIVED_URL',
                payload: {

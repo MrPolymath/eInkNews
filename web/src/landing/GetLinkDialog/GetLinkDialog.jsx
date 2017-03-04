@@ -25,7 +25,7 @@ const GetLinkDialog = (props) => {
         open={props.open}
         onRequestClose={() => props.handleClose}
       >
-        www.eink.news/pepitopalotes
+        {props.url ? props.url : 'http://www.aunnohayurl.com'}
       </Dialog>
     </div>
   )

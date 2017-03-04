@@ -13,7 +13,7 @@ const Form = (props) => (
     <Grid>
       <Row>
         <Col xs={12} md={4}>
-          <EmailInput />
+          <EmailInput handleChange={props.updateEmail}/>
         </Col>
         <Col xs={12} md={4}>
           <SubscriptionsSelect handleChange={props.addSubscription}/>

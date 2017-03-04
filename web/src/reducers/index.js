@@ -34,6 +34,11 @@ const landing = (state = defaultLandingState, action) => {
       subscriptions: newSubscriptions
     })
   }
+  if (type === ActionTypes.UPDATE_EMAIL) {
+    return merge({}, state, {
+      email: payload.email
+    })
+  }
   if (type === ActionTypes.RECEIVED_URL) {
     return merge({}, state, {
       url: payload.url,
