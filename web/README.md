@@ -4,6 +4,12 @@ This is the frontend of the web app. It's a single page application created in r
 
 Structure based on [Redux Real World Example](https://github.com/facebookincubator/redux/examples/redux-real-world-example), which is itself built with [Create React App](https://github.com/facebookincubator/create-react-app).
 
+## Installation
+
+Simply run:
+
+`npm install`
+
 ## Available Scripts
 
 In the project directory, you can run:
