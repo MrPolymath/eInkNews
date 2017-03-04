@@ -3,7 +3,7 @@ import AWS from 'aws-sdk'
 import Promise from 'bluebird'
 
 import User from '../models/User'
-import createEbook from '../helpers/create-ebook'
+import createEbook from '../news-parser'
 
 let bundleRoutes = Router()
 
@@ -16,9 +16,7 @@ bundleRoutes.get('/:userId', (req, res) => {
       // Get bundle age in hours
       const age = Math.floor((now - user.bundleDate) / (1000*60*60))
       // If older than 3 hours, recreate
-      if(age >= 3) {
-        return createEbook(user)
-      }
+      if (age >= 3) return createEbook(user)
       return Promise.resolve(user)
     })
     .then(({ id, bundleType }) => {
