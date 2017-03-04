@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/MrPolymath/eInkNews.svg?branch=master)](https://travis-ci.org/MrPolymath/eInkNews)
+
 # eInkNews
 
 ![screenshot](http://i.imgur.com/aG9MBZd.png)
