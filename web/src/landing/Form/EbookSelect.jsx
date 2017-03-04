@@ -3,10 +3,8 @@ import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 
 const subscriptions = [
-  <MenuItem key={'bbc'} value={'BBC'} primaryText="BBC" />,
-  <MenuItem key={'hackernews'} value={'Hacker News'} primaryText="Hacker News" />,
-  <MenuItem key={'elmundo'} value={'El mundo'} primaryText="El mundo" />,
-  <MenuItem key={'lavanguardia'} value={'La Vanguardia'} primaryText="La Vanguardia" />
+  <MenuItem key={1} value={'Kindle'} primaryText="Kindle" />,
+  <MenuItem key={2} value={'Other'} primaryText="Other" />,
 ]
 
 const styles = {
@@ -21,13 +19,13 @@ const styles = {
   }
 }
 
-const SubscriptionsSelect = (props) => (
+const EbookSelect = (props) => (
       <div>
         <SelectField
-          value={null}
+          value={props.device}
           fullWidth={true}
           onChange={props.handleChange}
-          floatingLabelText="Add subscriptions"
+          floatingLabelText="Select your device"
           floatingLabelStyle={styles.floatingLabelStyle}
           labelStyle={styles.inputStyle}
           menuItemStyle={styles.menuItemStyle}
@@ -37,4 +35,4 @@ const SubscriptionsSelect = (props) => (
       </div>
 )
 
-export default SubscriptionsSelect
+export default EbookSelect

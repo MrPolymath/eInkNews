@@ -18,18 +18,16 @@ const HeroLanding = (props) =>{
               </div>
             </Col>
           </Row>
-          <Row center="xs" start="md">
-            <Col md={4} mdOffset={1} lgOffset={0} lg={5} className={styles.textColumn}>
-              <Form
-                submitForm={props.submitForm}
-                email={props.email}
-                subscriptions={props.subscriptions}
-                addSubscription={props.addSubscription}
-                deleteSubscription={props.deleteSubscription}
-              />
-            </Col>
-          </Row>
         </Grid>
+        <Form
+          submitForm={props.submitForm}
+          email={props.email}
+          subscriptions={props.subscriptions}
+          addSubscription={props.addSubscription}
+          deleteSubscription={props.deleteSubscription}
+          selectDevice={props.selectDevice}
+          device={props.device}
+        />
     </div>
   )
 }

@@ -3,13 +3,14 @@ import request from 'superagent'
 const asyncCallsToApi = store => next => action => {
   next(action)
   switch (action.type) {
-    case 'SEND_FORM':
+    case 'SUBMIT_FORM':
       request
         .post(action.endpoint)
         .type('form')
         .send({
           email: action.payload.email,
-          subscriptions: action.payload.subscriptions
+          subscriptions: action.payload.subscriptions,
+          bundleType: action.payload.bundleType
          })
         .end(function(err, res){
           if (err || !res.ok) {

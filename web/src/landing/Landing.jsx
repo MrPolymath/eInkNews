@@ -3,23 +3,27 @@ import { connect } from 'react-redux'
 
 import Header from './Header/Header'
 import HeroLanding from './HeroLanding/HeroLanding'
+import GetLinkDialog from './GetLinkDialog/GetLinkDialog'
 
 // import actions
-import {submitForm, addSubscription, deleteSubscription} from  './../actions'
+import {submitForm, addSubscription, deleteSubscription, selectDevice, closeDialog} from  './../actions'
 
 const mapStateToProps = (state) => {
   return {
     email: state.landing.email,
     subscriptions: state.landing.subscriptions,
     submited: state.landing.submited,
-    url: state.landing.url
+    url: state.landing.url,
+    device: state.landing.device
   }
 }
 const mapDispatchToProps = (dispatch) => {
   return {
     submitForm: (data) => dispatch(submitForm(data)),
     addSubscription: (event, index, value) => dispatch(addSubscription(event, index, value)),
-    deleteSubscription: (key) => dispatch(deleteSubscription(key))
+    deleteSubscription: (key) => dispatch(deleteSubscription(key)),
+    selectDevice: (event, index, value) => dispatch(selectDevice(event, index, value)),
+    closeDialog: () => dispatch(closeDialog())
   }
 }
 class Landing extends Component {
@@ -33,7 +37,11 @@ class Landing extends Component {
             subscriptions={this.props.subscriptions}
             addSubscription={this.props.addSubscription}
             deleteSubscription={this.props.deleteSubscription}
+            selectDevice={this.props.selectDevice}
+            device={this.props.device}
           />
+          {/* The following dialog controls if its open or not itself */}
+          <GetLinkDialog url={this.props.url} open={this.props.submited} handleClose={this.props.closeDialog}/>
       </div>
     )
   }
