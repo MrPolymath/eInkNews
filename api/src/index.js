@@ -18,7 +18,7 @@ app.use((req, res, next) => {
 })
 
 // connect to mongo db
-const mongoUri = `${process.env.MONGO_HOST}:${process.env.MONGO_PORT}`
+const mongoUri = `${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/${process.env.MONGO_DB_NAME}`
 mongoose.connect(mongoUri, { server: { socketOptions: { keepAlive: 1 } } })
 mongoose.connection.on('error', () => {
   throw new Error(`unable to connect to database: ${mongoUri}`)
