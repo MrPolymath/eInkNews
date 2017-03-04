@@ -19,18 +19,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     submitForm: (data) => dispatch(submitForm(data)),
     addSubscription: (event, index, value) => dispatch(addSubscription(event, index, value)),
-    deleteSubscription: (event, index, value) => dispatch(deleteSubscription(event, index, value))
+    deleteSubscription: (key) => dispatch(deleteSubscription(key))
   }
 }
 class Landing extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {height: props.height};
-  }
-  componentDidMount(x,y,z){
-   this.setState({height: window.innerHeight});
-  }
-
   render() {
     return (
       <div>

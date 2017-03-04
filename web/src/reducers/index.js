@@ -27,7 +27,7 @@ const landing = (state = defaultLandingState, action) => {
       }
     })
     if (found === false) {
-      newSubscriptions = [...state.subscriptions, payload]
+      newSubscriptions = [payload, ...state.subscriptions]
     }
     return merge({}, state, {
       subscriptions: newSubscriptions
@@ -39,10 +39,16 @@ const landing = (state = defaultLandingState, action) => {
     })
   }
   if (type === ActionTypes.DELETE_SUBSCRIPTION) {
-    const subscriptionToDelete = state.subscriptions.map((subscription) => subscription.key).indexOf(key);
-    const deletedSubscriptions = state.subscriptions.splice(subscriptionToDelete, 1);
-    return merge({}, state, {
-      subscriptions: deletedSubscriptions
+    let newSubscriptions = []
+    state.subscriptions.forEach(function(sub) {
+      if (sub.key !== payload.key) {
+        newSubscriptions.push(sub)
+      }
+    })
+    const newState = state
+    newState.subscriptions = []
+    return merge({}, newState, {
+      subscriptions: newSubscriptions
     })
   }
 

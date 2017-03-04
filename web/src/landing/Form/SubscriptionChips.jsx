@@ -15,7 +15,6 @@ const SubscriptionChips = (props) => (
         {sub.value}
       </Chip>
     ))}
-
   </div>
 )
 
