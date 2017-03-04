@@ -9,7 +9,8 @@ const defaultLandingState = {
   subscriptions: [],
   submited: false,
   url: '',
-  device: ''
+  device: '',
+  sources: []
 }
 const landing = (state = defaultLandingState, action) => {
   const { type, error, payload} = action
@@ -17,6 +18,11 @@ const landing = (state = defaultLandingState, action) => {
     return merge({}, state, {
       submited: true,
       url: payload.url
+    })
+  }
+  if (type === ActionTypes.GOT_SOURCES) {
+    return merge({}, state, {
+      sources: payload.sources
     })
   }
   if (type === ActionTypes.ADD_SUBSCRIPTION) {

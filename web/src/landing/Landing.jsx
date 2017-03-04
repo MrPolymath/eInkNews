@@ -6,7 +6,7 @@ import HeroLanding from './HeroLanding/HeroLanding'
 import GetLinkDialog from './GetLinkDialog/GetLinkDialog'
 
 // import actions
-import {submitForm, updateEmail, addSubscription, deleteSubscription, selectDevice, closeDialog} from  './../actions'
+import {submitForm, updateEmail, addSubscription, deleteSubscription, selectDevice, closeDialog, getSubsFromDB} from  './../actions'
 
 const mapStateToProps = (state) => {
   return {
@@ -14,7 +14,8 @@ const mapStateToProps = (state) => {
     subscriptions: state.landing.subscriptions,
     submited: state.landing.submited,
     url: state.landing.url,
-    device: state.landing.device
+    device: state.landing.device,
+    sources: state.landing.sources
   }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -24,10 +25,15 @@ const mapDispatchToProps = (dispatch) => {
     deleteSubscription: (key) => dispatch(deleteSubscription(key)),
     selectDevice: (event, index, value) => dispatch(selectDevice(event, index, value)),
     closeDialog: () => dispatch(closeDialog()),
-    updateEmail: (event) => dispatch(updateEmail(event))
+    updateEmail: (event) => dispatch(updateEmail(event)),
+    getSubsFromDB: () => dispatch(getSubsFromDB())
   }
 }
 class Landing extends Component {
+  componentWillMount() {
+    console.log('we are mounting!');
+    this.props.getSubsFromDB()
+  }
   render() {
     return (
       <div>
@@ -41,6 +47,7 @@ class Landing extends Component {
             selectDevice={this.props.selectDevice}
             device={this.props.device}
             updateEmail={this.props.updateEmail}
+            sources={this.props.sources}
           />
           {/* The following dialog controls if its open or not itself */}
           <GetLinkDialog url={this.props.url} open={this.props.submited} handleClose={this.props.closeDialog}/>

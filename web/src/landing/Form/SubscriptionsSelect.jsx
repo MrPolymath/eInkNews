@@ -2,12 +2,12 @@ import React from 'react'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 
-const subscriptions = [
-  <MenuItem key={'bbc'} name={'bbc'} value={'BBC'} primaryText="BBC" />,
-  <MenuItem key={'hackernews'} name={'hackernews'} value={'Hacker News'} primaryText="Hacker News" />,
-  <MenuItem key={'elmundo'} name={'elmundo'} value={'El mundo'} primaryText="El mundo" />,
-  <MenuItem key={'lavanguardia'} name={'lavanguardia'} value={'La Vanguardia'} primaryText="La Vanguardia" />
-]
+// const subscriptions = [
+//   <MenuItem key={'bbc'} name={'bbc'} value={'BBC'} primaryText="BBC" />,
+//   <MenuItem key={'hackernews'} name={'hackernews'} value={'Hacker News'} primaryText="Hacker News" />,
+//   <MenuItem key={'elmundo'} name={'elmundo'} value={'El mundo'} primaryText="El mundo" />,
+//   <MenuItem key={'lavanguardia'} name={'lavanguardia'} value={'La Vanguardia'} primaryText="La Vanguardia" />
+// ]
 
 const styles = {
   floatingLabelStyle: {
@@ -32,7 +32,9 @@ const SubscriptionsSelect = (props) => (
           labelStyle={styles.inputStyle}
           menuItemStyle={styles.menuItemStyle}
         >
-          {subscriptions}
+          {props.sources.map((source) => (
+            <MenuItem key={source.key} name={source.key} value={source.name} primaryText={source.name} />
+          ))}
         </SelectField>
       </div>
 )

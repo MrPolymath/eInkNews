@@ -1,4 +1,5 @@
 import request from 'superagent'
+require('dotenv').config({silent: true});
 
 const asyncCallsToApi = store => next => action => {
   next(action)
@@ -16,11 +17,28 @@ const asyncCallsToApi = store => next => action => {
           if (err || !res.ok) {
           //  handle error calling API
           } else {
-            console.log(res.body);
             next({
                type: 'RECEIVED_URL',
                payload: {
                  url: res.body
+               }
+            })
+          }
+        }
+      )
+      break
+    case 'GET_SUBS_FROM_DB':
+      request
+        .get(process.env.NODE_ENV === 'development' ? 'http://localhost:'+ process.env.PORT + '/api/sources': process.env.API_URL + '/sources')
+        .end(function(err, res){
+          if (err || !res.ok) {
+          //  handle error calling API
+          } else {
+            console.log(res.body);
+            next({
+               type: 'GOT_SOURCES',
+               payload: {
+                 sources: res.body.sources
                }
             })
           }

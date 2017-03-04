@@ -5,6 +5,8 @@ export const DELETE_SUBSCRIPTION = 'DELETE_SUBSCRIPTION'
 export const SELECT_DEVICE = 'SELECT_DEVICE'
 export const RECEIVED_URL = 'RECEIVED_URL'
 export const CLOSE_DIALOG = 'CLOSE_DIALOG'
+export const GET_SUBS_FROM_DB = 'GET_SUBS_FROM_DB'
+export const GOT_SOURCES = 'GOT_SOURCES'
 
 export const submitForm = (email, subscriptions, device) => {
   const bundleType = device === 'Kindle' ? 'mobi' : 'epub'
@@ -19,6 +21,12 @@ export const submitForm = (email, subscriptions, device) => {
       subscriptions: parsedSubscriptions,
       bundleType: bundleType
     }
+  }
+}
+
+export const getSubsFromDB = () => {
+  return {
+    type: GET_SUBS_FROM_DB
   }
 }
 
