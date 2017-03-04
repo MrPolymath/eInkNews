@@ -5,16 +5,21 @@ import Header from './Header/Header'
 import HeroLanding from './HeroLanding/HeroLanding'
 
 // import actions
-import {sampleAction} from  './../actions'
+import {submitForm, addSubscription, deleteSubscription} from  './../actions'
 
 const mapStateToProps = (state) => {
   return {
-
+    email: state.landing.email,
+    subscriptions: state.landing.subscriptions,
+    submited: state.landing.submited,
+    url: state.landing.url
   }
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    sampleAction: () => dispatch(sampleAction()),
+    submitForm: (data) => dispatch(submitForm(data)),
+    addSubscription: (event, index, value) => dispatch(addSubscription(event, index, value)),
+    deleteSubscription: (event, index, value) => dispatch(deleteSubscription(event, index, value))
   }
 }
 class Landing extends Component {
@@ -30,7 +35,13 @@ class Landing extends Component {
     return (
       <div>
           <Header/>
-          <HeroLanding />
+          <HeroLanding
+            submitForm={this.props.submitForm}
+            email={this.props.email}
+            subscriptions={this.props.subscriptions}
+            addSubscription={this.props.addSubscription}
+            deleteSubscription={this.props.deleteSubscription}
+          />
       </div>
     )
   }

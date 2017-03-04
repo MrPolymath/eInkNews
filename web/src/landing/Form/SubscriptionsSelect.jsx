@@ -1,12 +1,12 @@
-import React, {Component} from 'react'
+import React from 'react'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 
-const items = [
-  <MenuItem key={1} value={1} primaryText="BBC" />,
-  <MenuItem key={2} value={2} primaryText="Hacker News" />,
-  <MenuItem key={3} value={3} primaryText="El mundo" />,
-  <MenuItem key={4} value={4} primaryText="La Vanguardia" />
+const subscriptions = [
+  <MenuItem key={1} value={'BBC'} primaryText="BBC" />,
+  <MenuItem key={2} value={'Hacker News'} primaryText="Hacker News" />,
+  <MenuItem key={3} value={'El mundo'} primaryText="El mundo" />,
+  <MenuItem key={4} value={'La Vanguardia'} primaryText="La Vanguardia" />
 ]
 
 const styles = {
@@ -21,27 +21,20 @@ const styles = {
   }
 }
 
-export default class SubscriptionsSelect extends Component {
-  state = {
-    value: null,
-  };
-
-  handleChange = (event, index, value) => this.setState({value});
-
-  render() {
-    return (
+const SubscriptionsSelect = (props) => (
       <div>
         <SelectField
-          value={this.state.value}
-          onChange={this.handleChange}
-          floatingLabelText="Styled Floating Label Text"
+          value={null}
+          fullWidth={true}
+          onChange={props.handleChange}
+          floatingLabelText="Add subscription"
           floatingLabelStyle={styles.floatingLabelStyle}
           labelStyle={styles.inputStyle}
           menuItemStyle={styles.menuItemStyle}
         >
-          {items}
+          {subscriptions}
         </SelectField>
       </div>
-    );
-  }
-}
+)
+
+export default SubscriptionsSelect

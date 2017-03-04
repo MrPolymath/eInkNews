@@ -20,9 +20,6 @@
   font-weight: 300;
 }
 @media (max-width: 1024px) {
-  .buttonContainer {
-    margin: auto;
-  }
   .textColumn {
     margin-bottom: 80px;
   }
