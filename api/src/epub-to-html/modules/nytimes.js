@@ -1,62 +1,69 @@
-var http = require("http");
-
+var fs = require('fs');
+var scrape = require("website-scraper");
+import Promise from 'bluebird'
 
 const nytimesParser = function(epub){
-const regex_article = /<h2 class="story-heading"[^>]*>((?:.|\r?\n)*?)<\/h2>/g
-const regex_url = /<a href="(.*?).html"/
-const regex_title = /.html">(.*?)<\/a>/
+  return new Promise(function(resolve, reject) {
 
-const articles = epub.match(regex_article);
-var articleUrl = [];
-var articleTitle = [];
+    const regex_article = /<h2 class="story-heading"[^>]*>((?:.|\r?\n)*?)<\/h2>/g
+    const regex_url = /<a href="(.*?).html"/
+    const regex_title = /.html">(.*?)<\/a>/
+    const regex_final = /<p class="story-body-text story-content(.*?)<\/p>/g
 
-var counter = 0;
-  for (var i = 0; i < articles.length ; i++) {
-    if ( regex_url.exec(articles[i]) !== null && regex_title.exec(articles[i]) !== null){
-        articleUrl[counter] = regex_url.exec(articles[i])[1].toString().concat('.html');
-        articleTitle[counter] = regex_title.exec(articles[i])[1].replace('\n','')
-        console.log('web: ',articleUrl[counter], 'titulo: ',articleTitle[counter]);
-        counter ++;
+    const articles = epub.match(regex_article);
+    var articleUrl = [];
+    var articleTitle = [];
+    var final_response = [];
+    var counter = 0;
+      for (var i = 0; i < articles.length ; i++) {
+        if ( regex_url.exec(articles[i]) !== null && regex_title.exec(articles[i]) !== null){
+            articleUrl[counter] = regex_url.exec(articles[i])[1].toString().concat('.html');
+            articleTitle[counter] = regex_title.exec(articles[i])[1].replace('\n','')
+            console.log('web: ',articleUrl[counter], 'titulo: ',articleTitle[counter]);
+            counter ++;
+          }
       }
+    console.log(counter);
+    var deleteFolderRecursive = function(path) {
+          if( fs.existsSync(path) ) {
+            fs.readdirSync(path).forEach(function(file,index){
+              var curPath = path + "/" + file;
+              if(fs.lstatSync(curPath).isDirectory()) { // recurse
+                deleteFolderRecursive(curPath);
+              } else { // delete file
+                fs.unlinkSync(curPath);
+              }
+            });
+            fs.rmdirSync(path);
+          }
+        };
+      var html_article = '';
+      deleteFolderRecursive('./file')
+      articleTitle.map((article,i) => {
+      // fs.unlink(`./file${i}.html`)
+      scrape({
+        urls: [articleUrl[i]],
+        directory: `./file/file${i}.html`,
+        recursive: false,
+        maxDepth: 1
+      }).then(function(){
+          // console.log(result.match(regex_final));
+         html_article = fs.readFileSync(`./file/file${i}.html/index.html`,{encoding: 'utf8'}).toString();
+         const p_article = html_article.match(regex_final);
+         const p_article_final = p_article.toString()//  console.log(html_article);
+          const final_article = '<h1>'+ article +'</h1><br/>'+ p_article_final;
+          console.log(final_article);
+          final_response = final_response.push({title:article ,data:final_article})
+      }).catch(console.log);
+    })
 
-    // console.log(articleUrl, i );
-    // console.log(articleUrl);
-    // http.get({
-    //     host: articleUrl,
-    //     method: 'GET',
-    //    agent: false
-    //   }
-    // , function(res){
-    //   console.log("Got response: " + res.statusCode);
-    //  }).on('error', function(e) {
-    //    console.log("Got error: " + e.message);
-    //  });
+  resolve(final_response);
 
-      // nightmare
-      //   .goto(articleUrl)
-      //   .end()
-      //   .html(`${i}prueba.html`, 'HTMLOnly')
-      //   .catch(function(error) {
-      //         console.error('Search failed:', error);
-      //     })
-        // .then(function(){console.log('hola');})
+  })
+    // console.log("end");
+
+    // resolve(resposta)
   }
-console.log(counter);
-}
 
-// var urls = ['http://example1.com', 'http://example2.com', 'http://example3.com'];
-// urls.reduce(function(accumulator, url) {
-//   return accumulator.then(function(results) {
-//     return nightmare.goto(url)
-//       .wait('body')
-//       .title()
-//       .then(function(result){
-//         results.push(result);
-//         return results;
-//       });
-//   });
-// }, Promise.resolve([])).then(function(results){
-//     console.dir(results);
-// });
-//
+
 export default nytimesParser;
