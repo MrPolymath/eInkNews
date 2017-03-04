@@ -15,7 +15,8 @@ const mapStateToProps = (state) => {
     submited: state.landing.submited,
     url: state.landing.url,
     device: state.landing.device,
-    sources: state.landing.sources
+    sources: state.landing.sources,
+    submiting: state.landing.submiting
   }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -35,6 +36,7 @@ class Landing extends Component {
     this.props.getSubsFromDB()
   }
   render() {
+    const openDialog = this.props.submiting || this.props.submited === true ? true : false
     return (
       <div>
           <Header/>
@@ -50,7 +52,12 @@ class Landing extends Component {
             sources={this.props.sources}
           />
           {/* The following dialog controls if its open or not itself */}
-          <GetLinkDialog url={this.props.url} open={this.props.submited} handleClose={this.props.closeDialog}/>
+          <GetLinkDialog
+            url={this.props.url}
+            open={openDialog}
+            handleClose={this.props.closeDialog}
+            submiting={this.props.submiting}
+          />
       </div>
     )
   }

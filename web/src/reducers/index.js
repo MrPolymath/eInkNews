@@ -7,6 +7,7 @@ import { combineReducers } from 'redux'
 const defaultLandingState = {
   email: '',
   subscriptions: [],
+  submiting: false,
   submited: false,
   url: '',
   device: '',
@@ -16,7 +17,7 @@ const landing = (state = defaultLandingState, action) => {
   const { type, error, payload} = action
   if (type === ActionTypes.SUBSCRIPTION_FORM_SUBMITTED) {
     return merge({}, state, {
-      submited: true,
+      submiting: true,
       url: payload.url
     })
   }
@@ -48,7 +49,8 @@ const landing = (state = defaultLandingState, action) => {
   if (type === ActionTypes.RECEIVED_URL) {
     return merge({}, state, {
       url: payload.url,
-      submited: true
+      submited: true,
+      submiting: false
     })
   }
   if (type === ActionTypes.DELETE_SUBSCRIPTION) {
@@ -71,7 +73,8 @@ const landing = (state = defaultLandingState, action) => {
   }
   if (type === ActionTypes.CLOSE_DIALOG) {
     return merge({}, state, {
-      submited: false
+      submited: false,
+      submiting: false
     })
   }
 

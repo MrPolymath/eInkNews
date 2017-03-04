@@ -1,6 +1,7 @@
 import React from 'react'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
+import loading from './../../assets/gears.svg'
 
 const GetLinkDialog = (props) => {
   const actions = [
@@ -19,13 +20,14 @@ const GetLinkDialog = (props) => {
   return (
     <div>
       <Dialog
-        title="Here's your download link!"
+        title={props.submiting ? 'We are processing your request!' : "Here's your download link!"}
         actions={actions}
         modal={false}
         open={props.open}
         onRequestClose={() => props.handleClose}
+        style={{textAlign: 'center'}}
       >
-        {props.url ? props.url : 'http://www.aunnohayurl.com'}
+        {props.url && !props.submiting ? props.url : <img src={loading} alt='loading-gears'/>}
       </Dialog>
     </div>
   )
