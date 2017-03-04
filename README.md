@@ -1,6 +1,6 @@
 # eInkNews
 
-![screenshot](http://i.imgur.com/f4CzVOj.png)
+![screenshot](http://i.imgur.com/aG9MBZd.png)
 
 Get your favourite news on your ebook.
 
