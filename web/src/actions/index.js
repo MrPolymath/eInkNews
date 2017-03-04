@@ -15,7 +15,6 @@ export const submitForm = (email, subscriptions, device) => {
     ))
   return {
     type: SUBMIT_FORM,
-    endpoint: 'http://localhost:3001/api/users',
     payload: {
       email: email,
       subscriptions: parsedSubscriptions,

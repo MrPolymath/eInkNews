@@ -1,12 +1,13 @@
 import request from 'superagent'
 require('dotenv').config({silent: true});
+console.log(process.env.API_PORT);
 
 const asyncCallsToApi = store => next => action => {
   next(action)
   switch (action.type) {
     case 'SUBMIT_FORM':
       request
-        .post(action.endpoint)
+        .post('http://ec2-52-56-164-171.eu-west-2.compute.amazonaws.com/api/users')
         .type('form')
         .send({
           email: action.payload.email,
@@ -29,7 +30,7 @@ const asyncCallsToApi = store => next => action => {
       break
     case 'GET_SUBS_FROM_DB':
       request
-        .get(process.env.NODE_ENV === 'development' ? 'http://localhost:'+ process.env.PORT + '/api/sources': process.env.API_URL + '/sources')
+        .get('http://ec2-52-56-164-171.eu-west-2.compute.amazonaws.com/api/sources')
         .end(function(err, res){
           if (err || !res.ok) {
           //  handle error calling API
