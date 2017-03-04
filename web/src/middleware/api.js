@@ -9,16 +9,16 @@ const asyncCallsToApi = store => next => action => {
         .type('form')
         .send({
           email: action.payload.email,
-          subscriptions: action.subscriptions
+          subscriptions: action.payload.subscriptions
          })
         .end(function(err, res){
           if (err || !res.ok) {
           //  handle error calling API
           } else {
             next({
-               type: 'ANOTHER_ACTION',
+               type: 'RECEIVED_URL',
                payload: {
-                 link: res.body.link
+                 url: res.body
                }
             })
           }

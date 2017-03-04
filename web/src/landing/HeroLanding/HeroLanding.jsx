@@ -2,6 +2,9 @@ import React from 'react'
 import styles from './HeroLanding.css'
 import {Grid, Row, Col} from 'react-flexbox-grid/lib/index'
 
+// import own components
+import Form from './../Form/Form'
+
 const HeroLanding = (props) =>{
   return (
     <div className={styles.mainDiv}>
@@ -13,6 +16,17 @@ const HeroLanding = (props) =>{
               <h2 className={styles.secondaryText}>Read your favourite news on your eBook</h2>
               <div className={styles.buttonContainer}>
               </div>
+            </Col>
+          </Row>
+          <Row center="xs" start="md">
+            <Col md={4} mdOffset={1} lgOffset={0} lg={5} className={styles.textColumn}>
+              <Form
+                submitForm={props.submitForm}
+                email={props.email}
+                subscriptions={props.subscriptions}
+                addSubscription={props.addSubscription}
+                deleteSubscription={props.deleteSubscription}
+              />
             </Col>
           </Row>
         </Grid>
