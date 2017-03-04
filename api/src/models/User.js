@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema({
 })
 
 UserSchema.methods.getBundleUrl = function() {
-  return `http://${process.env.ROOT_URL}/api/bundles/${this.id}`
+  return `${process.env.ROOT_URL}/api/bundles/${this.id}`
 }
 
 export default mongoose.model('User', UserSchema);
