@@ -1,8 +1,8 @@
-var jsdom = require("jsdom");
-var Promise = require('bluebird');
+import jsdom from 'jsdom'
+import Promise from 'bluebird'
 
 function getArticleContent(article) {
-  const promise = new Promise((resolve) => {
+  return new Promise((resolve) => {
     jsdom.env({
       url: article.link,
       scripts: ["http://code.jquery.com/jquery.js"],
@@ -28,36 +28,36 @@ function getArticleContent(article) {
       }
     })
   })
-  return promise
 }
 
-const hackernews = function(ebook, callback) {
-  jsdom.env(
-    ebook,
-    ["http://code.jquery.com/jquery.js"],
-    function (err, window) {
-      var $ = window.$;
-      var articles = []
-      $("td.title:not(:last) a.storylink").each(function() {
-        const title = $(this).text()
-        var link = $(this).attr('href')
-        link = link.includes('http') ? link : 'https://news.ycombinator.com/'+link
-        console.log('link: ',link);
-        articles.push({title: title, link: link})
-      })
-      const articlePromises = articles.map(article => {
-        return getArticleContent(article).then(text => {
-          const regex = /<header"[^>]*>((?:.|\r?\n)*?)<\/header>/g
-          const textWithoutHeader = text.replace(regex, '')
-          article.text = textWithoutHeader
-          delete article.link
-          return article
+const hackernews = function(ebook) {
+  return new Promise((resolve) => {
+    jsdom.env(
+      ebook,
+      ["http://code.jquery.com/jquery.js"],
+      function (err, window) {
+        var $ = window.$;
+        var articles = []
+        $("td.title:not(:last) a.storylink").each(function() {
+          const title = $(this).text()
+          var link = $(this).attr('href')
+          link = link.includes('http') ? link : 'https://news.ycombinator.com/'+link
+          articles.push({title: title, link: link})
         })
-      })
-      Promise.all(articlePromises).then(articles => callback(articles))
+        const articlePromises = articles.map(article => {
+          return getArticleContent(article).then(text => {
+            const regex = /<header"[^>]*>((?:.|\r?\n)*?)<\/header>/g
+            const textWithoutHeader = text.replace(regex, '')
+            article.data = textWithoutHeader
+            delete article.link
+            return article
+          })
+        })
+        Promise.all(articlePromises).then(articles => resolve(articles))
 
-    }
-  )
+      }
+    )
+  })
 }
 
 export default hackernews

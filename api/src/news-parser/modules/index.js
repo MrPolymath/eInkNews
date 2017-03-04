@@ -1,7 +1,9 @@
 import elmundo from './elmundo';
+import hackernews from './hackernews';
 
 const modules = () => ({
-  elmundo
+  elmundo,
+  hackernews
 })
 
 export default modules;

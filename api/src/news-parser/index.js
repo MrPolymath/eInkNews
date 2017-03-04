@@ -22,13 +22,16 @@ const createEbook  = function(params) {
   })
 
   // Works with only one domain for now
-  const key = filteredSources[0].key
-  const url = filteredSources[0].value
+  // const key = filteredSources[0].key
+  // const url = filteredSources[0].value
+  const key = 'hackernews'
+  const url = 'http://news.ycombinator.com'
   console.log(key);
   console.log(url);
 
   const htmlPath = tmp.tmpNameSync()
-  const epubPath = tmp.tmpNameSync()
+  // const epubPath = tmp.tmpNameSync()
+  const epubPath = './output.epub'
 
   return new Promise((resolve, reject) => {
     nightmare
@@ -37,7 +40,7 @@ const createEbook  = function(params) {
       .html(htmlPath, 'HTMLOnly')
       .then(() => {
         return new Promise((resolve, reject) => {
-          const ebook = fs.readFileSync(htmlPath,{ encoding: 'utf8' }).toString()
+          const ebook = String(fs.readFileSync(htmlPath, { encoding: 'utf8' }))
           modules()[key](ebook)
             .then((content) => {
               const options = {
