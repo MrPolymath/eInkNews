@@ -1,9 +1,9 @@
 var Epub = require("epub-gen")
 var Nightmare = require('nightmare');
-var nightmare = Nightmare({show: true});
-// var htmlparser = require("htmlparser2");
+var nightmare = Nightmare();
 var fs = require('fs');
-
+import modules from './modules';
+import nytimesParser from './modules/nytimes'
 const epubToHtml = function(url) {
 
   const HTML_PATH = process.env.HTML_PATH;
@@ -12,52 +12,54 @@ const epubToHtml = function(url) {
   const date = new Date();
   const day = date.getDate();
   const month = (date.getMonth()) + 1;
+  const domain2 = url.split('.');
+  const domain = domain2[0].split('//')
 
   nightmare
     .goto(url)
     .end()
     .html(HTML_PATH, 'HTMLOnly')
-    .then(function (result) {
+    .then(function () {
       const ebook = fs.readFileSync(HTML_PATH,{encoding: 'utf8'}).toString();
-      var option = {
-            title: day + '-' + month + '-' + url, // *Required, title of the book.
-            author: url, // *Required, name of the author.
-            publisher: url, // optional
-            cover: "http://www.deportevalenciano.com/files/styles/eht/public/new_york_times_logo_variation.jpg", // Url or File path, both ok.
-            content: [
-                {
-                    data: ebook // pass html string
-                }
-            ]
-        };
-      // console.log(ebook);
-      new Epub(option, EPUB_PATH).promise.then(function(){
-          console.log("Ebook Generated Successfully!")
-       }, function(err){
-          console.error("Failed to generate Ebook because of ", err)
+      modules()[domain[1]](ebook,(content) => {
+        var option = {
+              title: day + '-' + month + '-' + domain, // *Required, title of the book.
+              author: url, // *Required, name of the author.
+              publisher: url, // optional
+              cover: "http://www" + url + '/favicon.ico', // Url or File path, both ok.
+              content: [
+                  content.map((i) => {
+                      return(
+                        `{
+                            title: ${i.title} ,
+                            data: ${i.text},
+                        }, `
+                    )
+                  })
+              ]
+          };
+        new Epub(option, EPUB_PATH).promise.then(function(){
+            console.log("Ebook Generated Successfully!")
+         }, function(err){
+            console.error("Failed to generate Ebook because of ", err)
+        })
       })
     })
     .catch(function (error) {
       console.error('Search failed:', error);
     });
-
-  // var parser = new htmlparser.Parser({
-  //     onopentag: function(name, attribs){
-  //         if(name === "script" && attribs.type === "text/javascript"){
-  //             console.log("JS! Hooray!");
-  //         }
-  //     },
-  //     ontext: function(text){
-  //         console.log("-->", text);
-  //     },
-  //     onclosetag: function(tagname){
-  //         if(tagname === "script"){
-  //             console.log("That's it?!");
-  //         }
-  //     }
-  // }, {decodeEntities: true});
-  // parser.write("Xyz <script type='text/javascript'>var foo = '<<bar>>';</ script>");
-  // parser.end();
 }
 
 export default epubToHtml
+
+// 
+// content ={
+//
+//     {titulo:
+//     texto:}
+//
+//     {titulo:
+//     texto:},
+//
+//
+// }

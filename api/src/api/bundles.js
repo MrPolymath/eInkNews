@@ -2,9 +2,9 @@ import { Router } from 'express'
 import AWS from 'aws-sdk'
 import User from '../models/User'
 
-let bundle = Router()
+let bundleRoutes = Router()
 
-bundle.get('/:userId', (req, res) => {
+bundleRoutes.get('/:userId', (req, res) => {
   const { userId } = req.params
 
   User.findOne({ _id: userId }).exec()
@@ -20,4 +20,4 @@ bundle.get('/:userId', (req, res) => {
     })
 })
 
-export default bundle
+export default bundleRoutes
