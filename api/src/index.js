@@ -1,7 +1,7 @@
 import {} from 'dotenv/config'
 import express from 'express'
 import bodyParser from 'body-parser'
-import mongoose from 'mongoose'
+import './config/db'
 
 import api from './api'
 
@@ -15,13 +15,6 @@ app.use((req, res, next) => {
   // res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
   // res.header('Access-Control-Allow-Headers', 'Content-Type')
   next()
-})
-
-// Connect to MongoDB
-const mongoUri = `${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/${process.env.MONGO_DB_NAME}`
-mongoose.connect(mongoUri, { server: { socketOptions: { keepAlive: 1 } } })
-mongoose.connection.on('error', () => {
-  throw new Error(`unable to connect to database: ${mongoUri}`)
 })
 
 app.use('/api', api)

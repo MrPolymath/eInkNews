@@ -1,35 +1,45 @@
 import { Router } from 'express'
 import User from '../models/User'
+import createEbook from '../helpers/create-ebook'
 
-let user = Router()
+const user = Router()
 
-user.post('/', (req, res, next) => {
-  if (!req.body.email || !req.body.interests) {
+user.post('/', (req, res) => {
+  const { email, subscriptions, bundleType } = req.body;
+  if (!email || !subscriptions || !bundleType) {
     return res.json('you suck')
   }
 
-  User.findOne({ email: req.body.email }, (err, user) => {
-    if (user == null) {
-      const newUser = new User({
-        email: req.body.email
-      })
-      newUser.save()
-        .then(savedUser => {
-          // TODO: Create first bundle
-          return res.json(savedUser.getBundleUrl())
-        })
-        .catch(e => next(e));
-    } else {
-      if (user.interests != req.body.interests) {
-        user.interests = req.body.interests
-        user.save((err) => {
-          if (err) return res.json('well this is embarrassing')
-          // TODO: Interests have changed, recreate bundle
-        })
+  User.findOne({ email })
+    .then(user => {
+      if (user == null) {
+        const newUser = new User({ email, subscriptions, bundleType })
+        newUser
+          .save()
+          .then(user => createEbook(user))
+          .then(user => res.json(user.getBundleUrl()))
+      } else {
+        let modified = false
+        if (user.subscriptions != subscriptions) {
+          user.subscriptions = subscriptions
+          modified = true
+        }
+        if (user.bundleType != bundleType) {
+          user.bundleType = bundleType
+          modified = true
+        }
+        if (modified) {
+          user
+            .save()
+            .then(user => createEbook(user))
+            .then(user => res.json(user.getBundleUrl()))
+
+        }
       }
-      return res.json(user.getBundleUrl())
-    }
-  })
+    })
+    .catch(err => {
+      return res.json({ message: 'well this is embarrassing', err })
+    })
 })
 
 export default user
