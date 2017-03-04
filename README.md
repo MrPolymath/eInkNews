@@ -4,7 +4,7 @@
 
 ![screenshot](http://i.imgur.com/aG9MBZd.png)
 
-Get your favourite news on your ebook.
+Get your favourite news and blogs on your ebook.
 
 We achieve this by parsing news websites and blogs to make them readable by any ebook, be it a Kindle or another device.
 
