@@ -1,0 +1,24 @@
+{
+  "sources": [
+    {
+      "key": "hackernews",
+      "value": "https://news.ycombinator.com"
+    },
+    {
+      "key": "nytimes",
+      "value": "http://nytimes.com"
+    },
+    {
+      "key": "bbc",
+      "value": "http://bbc.com/news"
+    },
+    {
+      "key": "elmundo",
+      "value": "http://elmundo.es"
+    },
+    {
+      "key": "lavanguardia",
+      "value": "http://lavanguardia.com"
+    }
+  ]
+}
