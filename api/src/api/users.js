@@ -15,7 +15,12 @@ userRoutes.post('/', (req, res) => {
   User.findOne({ email })
     .then(user => {
       if (user == null) {
-        const newUser = new User({ email, subscriptions, bundleType })
+        const newUser = new User({
+          email,
+          subscriptions,
+          bundleType,
+          bundleDate: new Date()
+        })
         newUser
           .save()
           .then(user => createEbook(user))
@@ -32,12 +37,12 @@ userRoutes.post('/', (req, res) => {
           modified = true
         }
         if (modified) {
+          user.bundleDate = new Date()
           user
             .save()
             .then(user => createEbook(user))
             .then(ebookPath => uploadToS3(ebookPath, user))
             .then(() => res.json(user.getBundleUrl()))
-
         }
       }
     })
