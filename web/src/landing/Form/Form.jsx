@@ -16,7 +16,7 @@ const Form = (props) => (
           <EmailInput handleChange={props.updateEmail}/>
         </Col>
         <Col xs={12} md={4}>
-          <SubscriptionsSelect handleChange={props.addSubscription}/>
+          <SubscriptionsSelect handleChange={props.addSubscription} sources={props.sources}/>
           <SubscriptionChips deleteSubscription={props.deleteSubscription} subscriptions={props.subscriptions}/>
         </Col>
         <Col xs={12} md={4}>

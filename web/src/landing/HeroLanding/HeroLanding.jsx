@@ -28,6 +28,7 @@ const HeroLanding = (props) =>{
           selectDevice={props.selectDevice}
           device={props.device}
           updateEmail={props.updateEmail}
+          sources={props.sources}
         />
     </div>
   )
