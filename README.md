@@ -1,4 +1,7 @@
 # eInkNews
+
+![screenshot](http://i.imgur.com/f4CzVOj.png)
+
 Get your favourite news on your ebook.
 
 We achieve this by parsing news websites and blogs to make them readable by any ebook, be it a Kindle or another device.
