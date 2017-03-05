@@ -1,9 +1,10 @@
 import Promise from 'bluebird'
 import Epub from 'epub-gen'
 import kindlegen from 'kindlegen'
-import Nightmare from 'nightmare'
+// import Nightmare from 'nightmare'
 import fs from 'fs'
 import tmp from 'tmp'
+var scrape = require("website-scraper")
 
 import sources from '../config/sources.json'
 import modules from './modules'
@@ -11,7 +12,6 @@ import modules from './modules'
 const createEbook  = function(params) {
   const { subscriptions } = params
 
-  const nightmare = Nightmare()
 
   const date = new Date()
   const day = date.getDate()
@@ -29,13 +29,14 @@ const createEbook  = function(params) {
   const epubPath = tmp.tmpNameSync()
 
   return new Promise((resolve, reject) => {
-    nightmare
-      .goto(url)
-      .end()
-      .html(htmlPath, 'HTMLOnly')
-      .then(() => {
+    scrape({
+      urls: url,
+      directory: htmlPath,
+      recursive: false,
+      maxDepth: 1
+    }).then(() => {
         return new Promise((resolve, reject) => {
-          const ebook = String(fs.readFileSync(htmlPath, { encoding: 'utf8' }))
+          const ebook = String(fs.readFileSync(`${htmlPath}/index.html`, { encoding: 'utf8' }))
           modules()[key](ebook)
             .then((content) => {
               const options = {
