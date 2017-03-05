@@ -25,8 +25,11 @@ userRoutes.post('/', (req, res) => {
         newUser
           .save()
           .then(user => createEbook(user))
-          .then((ebookPath, user) => uploadToS3(ebookPath, user))
+          .then(ebookPath => uploadToS3(ebookPath, newUser))
           .then(user => res.json(user.getBundleUrl()))
+          .then(() => {
+            sendEmail(email, newUser.getBundleUrl())
+          })
       } else {
         let modified = false
         if (user.subscriptions != subscriptions) {
@@ -45,7 +48,7 @@ userRoutes.post('/', (req, res) => {
             .then(ebookPath => uploadToS3(ebookPath, user))
             .then(() => res.json(user.getBundleUrl()))
             .then(() => {
-              sendEmail(email,user.getBundleUrl())
+              sendEmail(email, user.getBundleUrl())
             })
         }
       }
