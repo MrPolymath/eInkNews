@@ -9,7 +9,7 @@ const sendEmail = (email, url) => {
     from: 'Eink News <postmaster@eink.news>',
     to: email,
     subject: 'Welcome to Our community',
-    text: `From now on you can download every morning your News and Blogs Morning Bundle using this URL:<br/>${url}<br/>
+    text: `From now on you can download every morning your News and Blogs Morning Bundle using this URL:</br>${url}</br>
     If you like this project don't hesitate to contribute at https://github.com/eink-news/eink.news`
 
   };
