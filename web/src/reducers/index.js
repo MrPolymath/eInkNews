@@ -21,6 +21,11 @@ const landing = (state = defaultLandingState, action) => {
       url: payload.url
     })
   }
+  if (type === ActionTypes.SUBMIT_FORM) {
+    return merge({}, state, {
+      submiting: true
+    })
+  }
   if (type === ActionTypes.GOT_SOURCES) {
     return merge({}, state, {
       sources: payload.sources
