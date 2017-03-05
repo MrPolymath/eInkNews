@@ -3,6 +3,7 @@ import { Router } from 'express'
 import User from '../models/User'
 import createEbook from '../news-parser'
 import uploadToS3 from '../helpers/upload-to-s3'
+import sendEmail from '../helpers/send-email'
 
 const userRoutes = Router()
 
@@ -24,8 +25,11 @@ userRoutes.post('/', (req, res) => {
         newUser
           .save()
           .then(user => createEbook(user))
-          .then((ebookPath, user) => uploadToS3(ebookPath, user))
+          .then(ebookPath => uploadToS3(ebookPath, newUser))
           .then(user => res.json(user.getBundleUrl()))
+          .then(() => {
+            sendEmail(email, newUser.getBundleUrl())
+          })
       } else {
         let modified = false
         if (user.subscriptions != subscriptions) {
@@ -43,6 +47,9 @@ userRoutes.post('/', (req, res) => {
             .then(user => createEbook(user))
             .then(ebookPath => uploadToS3(ebookPath, user))
             .then(() => res.json(user.getBundleUrl()))
+            .then(() => {
+              sendEmail(email, user.getBundleUrl())
+            })
         }
       }
     })
