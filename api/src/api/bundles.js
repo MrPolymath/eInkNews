@@ -24,8 +24,8 @@ bundleRoutes.get('/:userId', (req, res) => {
       const s3 = new AWS.S3()
       const params = { Bucket: process.env.S3_BUCKET, Key: `${bundleType}/${id}.${bundleType}` }
       // TODO: Error checking
+      res.attachment(`${id}.${bundleType}`)
       s3.getObject(params).createReadStream().pipe(res)
-      return Promise.resolve()
     })
     .catch(err => {
       return res.json({ message: 'well this is embarrassing', err })
