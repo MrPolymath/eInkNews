@@ -12,8 +12,8 @@ const HeroLanding = (props) =>{
           <Row center="xs" start="md">
             {/* TEXT CONTAINER */}
             <Col md={4} mdOffset={1} lgOffset={0} lg={5} className={styles.textColumn}>
-              <h1 className={styles.primaryText}>eInkNews</h1>
-              <h2 className={styles.secondaryText}>Read your favourite news on your eBook</h2>
+              <h1 className={styles.primaryText}>eink.news</h1>
+              <h2 className={styles.secondaryText}>Your favourite news and blogs on your eBook every morning, automatically.</h2>
               <div className={styles.buttonContainer}>
               </div>
             </Col>

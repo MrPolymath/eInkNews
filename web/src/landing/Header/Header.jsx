@@ -5,7 +5,7 @@ const Header = (props) => {
   return (
     <div>
       <AppBar
-        title="eInkNews"
+        title="eink.news"
         style={{position: 'fixed'}}
         showMenuIconButton={false}
       />
