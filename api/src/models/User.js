@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema({
 }, { timestamps: true })
 
 UserSchema.methods.getBundleUrl = function() {
-  return `${process.env.ROOT_URL}/api/bundles/${this.id}`
+  return `${process.env.ROOT_URL}/bundles/${this.id}`
 }
 
 export default mongoose.model('User', UserSchema);

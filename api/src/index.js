@@ -1,8 +1,8 @@
 import {} from 'dotenv/config'
 import express from 'express'
 import bodyParser from 'body-parser'
-import './config/db'
 
+import './config/db'
 import api from './api'
 
 const app = express()
@@ -17,7 +17,7 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use('/api', api)
+app.use('/', api)
 
 app.listen( process.env.PORT || 3000, function () {
   console.log('Running!')
