@@ -1,6 +1,4 @@
 import request from 'superagent'
-require('dotenv').config({silent: true});
-console.log(process.env.API_PORT);
 
 const asyncCallsToApi = store => next => action => {
   next(action)
@@ -35,7 +33,6 @@ const asyncCallsToApi = store => next => action => {
           if (err || !res.ok) {
           //  handle error calling API
           } else {
-            console.log(res.body);
             next({
                type: 'GOT_SOURCES',
                payload: {

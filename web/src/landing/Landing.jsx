@@ -32,7 +32,6 @@ const mapDispatchToProps = (dispatch) => {
 }
 class Landing extends Component {
   componentWillMount() {
-    console.log('we are mounting!');
     this.props.getSubsFromDB()
   }
   render() {
