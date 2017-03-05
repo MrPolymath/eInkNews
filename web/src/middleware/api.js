@@ -7,7 +7,7 @@ const asyncCallsToApi = store => next => action => {
   switch (action.type) {
     case 'SUBMIT_FORM':
       request
-        .post('https://ec2-52-56-164-171.eu-west-2.compute.amazonaws.com/api/users')
+        .post('https://api.eink.news/api/users')
         .type('form')
         .send({
           email: action.payload.email,
@@ -30,7 +30,7 @@ const asyncCallsToApi = store => next => action => {
       break
     case 'GET_SUBS_FROM_DB':
       request
-        .get('https://ec2-52-56-164-171.eu-west-2.compute.amazonaws.com/api/sources')
+        .get('https://api.eink.news/api/sources')
         .end(function(err, res){
           if (err || !res.ok) {
           //  handle error calling API
