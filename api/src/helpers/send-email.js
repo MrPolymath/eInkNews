@@ -87,7 +87,9 @@ const sendEmail = (email, url) => {
     </tr></table></body>`
   };
   mailgun.messages().send(data, function (error, body) {
-    if (error) throw error;
+    if (error){
+console.log(error);
+    }
     console.log(body);
   });
 
