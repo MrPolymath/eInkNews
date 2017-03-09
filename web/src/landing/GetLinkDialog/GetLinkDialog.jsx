@@ -27,7 +27,7 @@ const GetLinkDialog = (props) => {
         onRequestClose={() => props.handleClose}
         style={{textAlign: 'center'}}
       >
-        {props.url && !props.submiting ? <a href={props.url}>{props.url}</a> : <img src={loading} alt='loading-gears'/>}
+        {props.url && !props.submiting ? <a href={'http://' + props.url}>{props.url}</a> : <img src={loading} alt='loading-gears'/>}
       </Dialog>
     </div>
   )

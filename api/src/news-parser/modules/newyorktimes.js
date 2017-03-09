@@ -22,6 +22,9 @@ const nytimesParser = function(epub){
         }
     }
 
+    // TODO: Move deleteFolderRecursive to a helper
+    // TODO: Te algun sentit fer-ho així? guardar, llegir, borrar? No és millor directament fer una request i llegir el body?
+
     var deleteFolderRecursive = function(path) {
       if( fs.existsSync(path) ) {
         fs.readdirSync(path).forEach(function(file){
