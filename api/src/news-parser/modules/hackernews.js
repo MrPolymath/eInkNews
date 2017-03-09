@@ -55,8 +55,7 @@ const hackernews = function(ebook) {
         })
         Promise.all(articlePromises).then(articles => resolve(articles))
 
-      }
-    )
+      })
   })
 }
 
