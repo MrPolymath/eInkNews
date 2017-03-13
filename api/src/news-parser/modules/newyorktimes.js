@@ -2,6 +2,8 @@ var fs = require('fs')
 var scrape = require("website-scraper")
 import Promise from 'bluebird'
 
+import deleteFolderRecursive from '../../helpers/delete-folder-recursive'
+
 const nytimesParser = function(epub){
   return new Promise(function(resolve, reject) {
     const regex_article = /<h2 class="story-heading"[^>]*>((?:.|\r?\n)*?)<\/h2>/g
@@ -22,25 +24,7 @@ const nytimesParser = function(epub){
         }
     }
 
-    // TODO: Move deleteFolderRecursive to a helper
     // TODO: Te algun sentit fer-ho així? guardar, llegir, borrar? No és millor directament fer una request i llegir el body?
-
-    var deleteFolderRecursive = function(path) {
-      if( fs.existsSync(path) ) {
-        fs.readdirSync(path).forEach(function(file){
-          var curPath = path + "/" + file
-          // recurse
-          if(fs.lstatSync(curPath).isDirectory()) {
-            deleteFolderRecursive(curPath)
-          } else {
-            // delete file
-            fs.unlinkSync(curPath)
-          }
-        })
-        fs.rmdirSync(path)
-      }
-    }
-
     var html_article = ''
     deleteFolderRecursive('./file')
     const articlePromises = articleTitle.map((article, i) => {
