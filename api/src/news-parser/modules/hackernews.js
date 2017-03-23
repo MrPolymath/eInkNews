@@ -3,7 +3,7 @@ import Promise from 'bluebird'
 import getMatches from '../../helpers/get-matches.js'
 
 
-const elmundoParser = function(epub){
+const hackernewsParser = function(epub){
   return new Promise(function(resolve) {
     //Variables declaration: response array, Regex to get all the articles, Regex to get all article links, and a cleaning sentence to delete some unnecessary links from the ebook
     var final_response = []
@@ -60,4 +60,4 @@ const elmundoParser = function(epub){
   })
 }
 
-export default elmundoParser
+export default hackernewsParser
