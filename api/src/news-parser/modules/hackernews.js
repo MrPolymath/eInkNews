@@ -16,10 +16,6 @@ const elmundoParser = function(epub){
     const articlesUrlComments = getMatches(articles.join(), regex_url_article_comments, articles.length, 2)
     const articlesTitles = getMatches(epub, regex_article_titles, articles.length)
     //TODO: No detecta todas las noticias correctamente
-    // console.log(articles[0]);
-    // console.log(articlesUrl[0]);
-    // console.log(articlesTitles[0]);
-    // console.log(articlesUrlComments[0]);
     // creation of a loop which gets the content and title of every article.
     // First of all: Promise.all in order to wait for all articles to finish being parsed , then the url articles array is mapped and each article becomes a Promise
     // When each promise has finished a new content and title is pushed into the final array
@@ -32,30 +28,36 @@ const elmundoParser = function(epub){
           let url = articlesUrl[i];
           url.split('//') ? '' : url=`https://news.ycombinator.com/${url}`
           read(url, function(err, page){
-            page ? resolve(page.content) : resolve(null)
+            page ? resolve({page:page.content, index:i}) : resolve(null)
           })
         }
         else resolve(null)
       })
-        .then(function(success){
-          let a = i
-          if(success != null & success != false & articlesUrlComments[a] != null){
-            read('https://news.ycombinator.com/'+articlesUrlComments[a], function(err, page){
-              final_response.push({ title: articlesTitles[a], data: success})
-              page.content ? final_response.push({ title: 'Comments:'+articlesTitles[a], data:page.content}) : ''
-              return true
-            })
-          }
+    }),{concurrency: 2})
+      .then(function(articlesParsed){
+        Promise.mapSeries(articlesParsed, (function(articleP) {
+          console.log("crash");
+          return new Promise(function(resolve){
+            if(articleP == null){ resolve(false)}
+            else if(articleP.page != false & articlesUrlComments[articleP.index] != null){
+                read('https://news.ycombinator.com/'+articlesUrlComments[articleP.index], function(err, page){
+                  console.log('insidetheread');
+                  final_response.push({ title: articlesTitles[articleP.index], data: articleP.page})
+                  page.content ? final_response.push({ title: 'Comments:'+articlesTitles[articleP.index], data:page.content}) : ''
+                  console.log("crashasdf");
+                  resolve(true)
+                })
+              }
+            else{resolve(false)}
+          })
+        }),{concurrency: 2})
+        .then(function() {
+          console.log('sefini');
+          // console.log(final_response);
+          resolve(final_response)
         })
-    }),{concurrency: 1})
-    .then(function() {
-      console.log('sefini');
-      console.log(final_response);
-      resolve(final_response)
-    })
+      })
   })
 }
-
-
 
 export default elmundoParser
