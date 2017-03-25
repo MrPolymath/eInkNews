@@ -4,6 +4,7 @@ import User from '../models/User'
 import createEbook from '../news-parser'
 import uploadToS3 from '../helpers/upload-to-s3'
 import sendEmail from '../helpers/send-email'
+import welcomeEmail from '../helpers/emails/welcome.js'
 
 const userRoutes = Router()
 
@@ -50,8 +51,9 @@ userRoutes.post('/', (req, res) => {
           res.json(user.getBundleUrl())
         })
         .then(() => {
+          let content = welcomeEmail(user.getBundleUrl())
           console.log('Sending email')
-          sendEmail(email, user.getBundleUrl())
+          sendEmail(email, content)
         })
     })
     .catch(err => {
