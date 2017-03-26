@@ -11,8 +11,6 @@ import modules from './modules'
 
 const createEbook  = function(params) {
   const { subscriptions } = params
-
-
   const date = new Date()
   const day = date.getDate()
   const month = (date.getMonth())+1
