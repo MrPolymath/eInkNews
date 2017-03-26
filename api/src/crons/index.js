@@ -12,18 +12,18 @@ schedules.forEach((schedule) => {
     cronTime: cronTime,
     onTick: function() {
       // Es corre cada 6 hores
-      
+
       // Ara mateix la funció createEbook llegia el bundleType i les subscriptions d'un user per a crear el ebook corresponent
       // a les seves necessitats.
       // Cal fer de nou el index.js de news-parser per a que ara el que revi sigui només el nom del source del que s'ha de crear
       // el bundle
       createEbook({
         bundleType: 'epub',
-        subscriptions: source
+        subscriptions: [source] // subscriptions expects to be an array although now its only one source
       })
       createEbook({
         bundleType: 'mobi',
-        subscriptions: source
+        subscriptions: [source] // subscriptions expects to be an array although now its only one source
       })
     },
     start: true,
