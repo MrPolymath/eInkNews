@@ -1,4 +1,5 @@
 const CronJob = require('cron').CronJob
+import https from 'https'
 
 import schedules from './schedules.js'
 import createEbook from '../news-parser'
@@ -20,10 +21,14 @@ schedules.forEach((schedule) => {
       createEbook({
         bundleType: 'epub',
         subscriptions: [source] // subscriptions expects to be an array although now its only one source
+      }).then(()=> {
+        https.get("https://hchk.io/39f91551-ad45-4f81-8c2d-bb1b2bb109b2");
       })
       createEbook({
         bundleType: 'mobi',
         subscriptions: [source] // subscriptions expects to be an array although now its only one source
+      }).then(()=> {
+        https.get("https://hchk.io/39f91551-ad45-4f81-8c2d-bb1b2bb109b2");
       })
     },
     start: true,
