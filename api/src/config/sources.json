@@ -14,6 +14,11 @@
       "key": "elmundo",
       "name": "El Mundo",
       "url": "http://elmundo.es"
+    },
+    {
+      "key": "indiehackers",
+      "name": "IndieHackers",
+      "url": "https://www.indiehackers.com/businesses"
     }
   ]
 }
