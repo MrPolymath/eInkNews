@@ -3,14 +3,14 @@ import Epub from 'epub-gen'
 import kindlegen from 'kindlegen'
 // import Nightmare from 'nightmare'
 import fs from 'fs'
-import tmp from 'tmp'
-var scrape = require("website-scraper")
+import https from 'https'
+import http from 'http'
 
 import sources from '../config/sources.json'
 import modules from './modules'
 
 const createEbook  = function(params) {
-  const { subscriptions } = params
+  const { subscriptions, id } = params
 
 
   const date = new Date()
@@ -25,18 +25,44 @@ const createEbook  = function(params) {
   const key = filteredSources[0].key
   const url = filteredSources[0].url
 
-  const htmlPath = tmp.tmpNameSync()
-  const epubPath = tmp.tmpNameSync()
+  console.log(key);
+  console.log(url);
+  const epubPath = `./${id}.epub`
 
   return new Promise((resolve, reject) => {
-    scrape({
-      urls: url,
-      directory: htmlPath,
-      recursive: false,
-      maxDepth: 1
-    }).then(() => {
+    return new Promise(function(resolve){
+      if(url.split('https')){
+        https.get(url, (res) => {
+          var data = []
+          res.on('data', (d) => {
+            data.push(d)
+          }).on('end', function() {
+              const ebook = Buffer.concat(data)
+              resolve(ebook.toString())
+          })
+        }).on('error', (e) => {
+          console.error(e)
+          resolve(false)
+        })
+      }
+      else{
+        http.get(url, (res) => {
+          var data = []
+          res.on('data', (d) => {
+            data.push(d)
+          }).on('end', function() {
+              const ebook = Buffer.concat(data)
+              resolve(ebook.toString())
+          })
+        }).on('error', (e) => {
+          console.error(e)
+          resolve(false)
+        })
+      }
+    })
+    .then((ebook) => {
         return new Promise((resolve, reject) => {
-          const ebook = String(fs.readFileSync(`${htmlPath}/index.html`, { encoding: 'utf8' }))
+          console.log(ebook);
           modules()[key](ebook)
             .then((content) => {
               const options = {
@@ -58,8 +84,9 @@ const createEbook  = function(params) {
       .then((epubPath) => {
         switch(params.bundleType) {
           case 'mobi': {
-            const mobiPath = tmp.tmpNameSync()
+            const mobiPath = `./${id}.mobi`
             kindlegen(fs.readFileSync(epubPath), (err, mobi) => {
+              console.log(mobi);
               fs.writeFile(mobiPath, mobi, (err) => {
                 if (err) throw err
                 return resolve(mobiPath)
