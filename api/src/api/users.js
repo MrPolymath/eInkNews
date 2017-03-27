@@ -1,15 +1,18 @@
 import { Router } from 'express'
+import fs from 'fs'
 
 import User from '../models/User'
 import createEbook from '../news-parser'
 import uploadToS3 from '../helpers/upload-to-s3'
 import sendEmail from '../helpers/send-email'
-import welcomeEmail from '../helpers/emails/welcome.js'
+import welcome_email from '../helpers/emails/welcome.js'
+import sendBundleEmail from '../helpers/send-bundle-email.js'
 
 const userRoutes = Router()
+let bookPath = ''
 
 userRoutes.post('/', (req, res) => {
-  const { email, subscriptions, bundleType } = req.body;
+  const { email, subscriptions, bundleType , kindleEmail} = req.body;
   if (!email || !subscriptions || !bundleType) {
     return res.json('One or more parameters are missing.')
   }
@@ -44,6 +47,7 @@ userRoutes.post('/', (req, res) => {
         })
         .then(ebookPath => {
           console.log('Uploading to S3');
+          bookPath = ebookPath;
           return uploadToS3(ebookPath, user)
         })
         .then(user => {
@@ -51,9 +55,14 @@ userRoutes.post('/', (req, res) => {
           res.json(user.getBundleUrl())
         })
         .then(() => {
-          let content = welcomeEmail(user.getBundleUrl())
+          let welcomeEmail = welcome_email(user.getBundleUrl())
           console.log('Sending email')
-          sendEmail(email, content)
+          sendEmail(email, welcomeEmail)
+        })
+        .then(() => {
+          kindleEmail? sendBundleEmail(kindleEmail, bookPath).then(() => {
+            fs.unlinkSync(`${user.id}.${user.bundleType}`)
+          }) : fs.unlinkSync(`${user.id}.${user.bundleType}`)
         })
     })
     .catch(err => {
