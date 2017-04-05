@@ -39,7 +39,7 @@ const indiehackersParser = function(epub){
             if(urls[index-1] != null & title[index-1]!= null & description[index-1]!= null & revenue[index-1]!= null ){
               read(`https://www.indiehackers.com/${urls[index-1]}`, function(err, page){
                   // console.log(page);
-                  let header = title[index-1] + ' ' + description[index-1] + '--->revenue: ' +  revenue[index-1];
+                  let header = title[index-1] + '; ' + description[index-1] + '; Revenue: ' +  revenue[index-1];
                   page ? final_response.push({ title: header , data: page.content }) & resolve(true) : resolve(null)
               })
             }
