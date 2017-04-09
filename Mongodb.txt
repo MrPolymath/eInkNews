@@ -1,0 +1,4 @@
+Configurado para que acpete todas las IP.
+De momento está así porque Heroku tiene IPs dinámicas
+así que es imposible configurarlo de tal manera que solo
+sea capaz de entrar el servidor de la API. 
