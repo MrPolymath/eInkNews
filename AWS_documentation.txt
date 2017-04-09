@@ -1,0 +1,76 @@
+Que tenemos montado?
+
+  Route 53: DOMAINS
+
+    1 domain:
+      eink.news
+
+    2 hosted zones:
+      eink.news: A->Cloudfront(S3(eink.news-frontend)), GandiMail, API.redirects to api.eink.news hosted zone
+      api.eink.news: A->Loadbalancer(EC2(einknews-api))
+
+
+  EC2: SERVERS
+
+    1 instances:
+      einknews-api(API Docker Image)
+
+    2 volumes:
+      vol-05c893af9a56636d9, 16Gb, used as hd for "einknews-api" ec2 instance
+
+    3 Security Groups:
+      default VPC security group
+      load-balancer-einkNewsAPI
+      Docker Machine
+
+    4 key pairs:
+      einknews-api.pem (LOST)
+
+    5 Network Interfaces:
+      AS VPC is related to Load balancers. When you create a load balancer it automatically creates this kind of bounds
+
+    6 Load Balancers:
+      einkNewsAPI
+
+    7 Target Groups:
+      Eink-news-API
+
+
+  S3: ONLINE HARD DRIVES
+
+    aws-website-einknew-693yg:
+      Eink.news frontend static page located in US EAST(N.Virginia)
+
+    einknews:
+      Eink.news ebook bundles located in EU(London)
+
+
+  Certifate Manager: SSL CERTIFICATES
+
+    LONDON:
+      api.eink.news ssl certificate
+
+    N.VIRGINIA:
+      eink.news ssl certificate
+
+
+  Cloudfront: DESTRIBUTION and Data from the web usage
+    E39SD8HQPQDL8O:
+      Linked to S3(aws-website-einknew-693yg) , so linked to the frontpage. It redirects http requests to https.
+      It also uses Certificate Manager(eink.news ssl certificate).
+
+
+  VPC: Related to loadbalancers, when you create a loadbalancer it automatically creates this items, no need to modify them.
+
+
+Cloudfront, LoadBalancer & SSL AWS
+
+Molt útil per la frontpage, perque aconseguim que el contingut arribi molt més rapid al client pero no gaire útil pel server a no ser que fem una publicAPI (de moment no sembla el cas)
+Comprovat que té temps de caché, com ja esperavem, el default time es de 24h però es customitzable. Suposo que això també vol dir que si canviem la frontpage en alguns llocs trigarà fins a 24h en actualitzar-se.
+Interesant doncs, sempre que es fa un canvi important al fronted pot ser interesant invalidar Cloudfront com vam fer al hackathon seguint les directrius d'aquesta pàgina: http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Invalidation.html
+
+Pel cas de la API el mentor del hackathon ens va recomanar fer servir un loadbalancer d'amazon.
+Aixó és el que et permet que amazon reguli la necessitat d'obrir noves instancies en cas que hi hagi moltes requests o el que t'ajuda a redirigir el teu trafic segons el routing que defineixes a diferents instàncies de EC2 (molt interesant això últim, et permet tener difernets instàncies segons la funcionalitat que tingui dins la teva API )
+Ademés d'això al igual que Cloudfront et permet fer una configuració de dominis i tal, així que et permet fer servir SSL i alguna cosa més.
+Això és molt més adecuat per la API que Cloudfront, perquè a la llarga es molt probable que fem servir aquest tipus de serveis d'escalabilitat i especialització.
+Ademés inclús si calgués perquè féssim alguna PublicAPI podríem ficar el loadbalancer dins de Cloudfront, no com ara que és directament l'instància dins de Cloudfront.
