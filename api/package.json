@@ -30,6 +30,7 @@
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.0",
     "dotenv": "^4.0.0",
+    "cron": "^1.2.1",
     "epub-gen": "0.0.17",
     "express": "^4.13.3",
     "htmlparser2": "^3.9.2",
