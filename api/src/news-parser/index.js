@@ -10,9 +10,8 @@ import sources from '../config/sources.json'
 import modules from './modules'
 
 const createEbook  = function(params) {
+
   const { subscriptions, id } = params
-
-
   const date = new Date()
   const day = date.getDate()
   const month = (date.getMonth())+1
