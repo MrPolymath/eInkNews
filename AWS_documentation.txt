@@ -13,7 +13,7 @@ Que tenemos montado?
   EC2: SERVERS
 
     1 instances:
-      einknews-api(API Docker Image)
+      There are no ec2 instances right now.
 
     2 volumes:
       vol-05c893af9a56636d9, 16Gb, used as hd for "einknews-api" ec2 instance
