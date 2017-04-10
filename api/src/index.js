@@ -5,10 +5,11 @@ import https from 'https'
 
 var CronJob = require('cron').CronJob;
 
-const job = new CronJob('00 10 * * * *', function() {
+const job = new CronJob('00 * * * * *', function() {
   https.get('https://einknews-api.herokuapp.com/');
-  console.log("crash");
-  }, function () {}, false
+  },
+  function () {},
+  false
 );
 
 import './config/db'
