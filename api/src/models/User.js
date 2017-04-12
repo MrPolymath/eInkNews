@@ -4,11 +4,14 @@ const UserSchema = new mongoose.Schema({
   email: String,
   subscriptions: [ String ],
   bundleType: String, // 'epub' or 'mobi'
-  bundleDate: Date
-}, { timestamps: true })
+  kindleEmail: String, // email used to sync the budndle
+  alias: String,
+  registerTime: Date,
+  updatedTime: Date
+})
 
 UserSchema.methods.getBundleUrl = function() {
-  return `${process.env.ROOT_URL}/bundles/${this.id}`
+  return `${process.env.ROOT_URL}/sync/${this.alias}`
 }
 
 export default mongoose.model('User', UserSchema);
