@@ -1,5 +1,7 @@
 import { Router } from 'express'
 import User from '../models/User'
+import sendEmail from '../helpers/send-email'
+import welcomeEmail from '../helpers/emails/welcome'
 let registerRoutes = Router()
 
 
@@ -14,8 +16,11 @@ registerRoutes.post('/', (req, res) => {
     .then((userDB) => {
       if(userDB == null){ //Register new user
         new User({email, subscriptions, bundleType, kindleEmail, registerTime: time, updatedTime: time}).save()
-          .then(() => {
-            res.sendStatus(201)
+          .then((newUser) => {
+            sendEmail(email, welcomeEmail(`https://eink.news/alias/${email}/${newUser._id}`))
+              .then(() => {
+                res.sendStatus(201)
+              })
           })
       }
       else{ // Update user info
