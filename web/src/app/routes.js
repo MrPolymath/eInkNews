@@ -1,7 +1,13 @@
 import React from 'react'
-import { Route } from 'react-router'
+import { Route, Router } from 'react-router'
 
-import Landing from '../landing/Landing'
+import Landing from '../pages/Landing/Landing'
+import Alias from '../pages/Alias'
 
-export default <Route path="/" component={Landing}>
-</Route>
+const routes = () => (
+<Router>
+  <Route path="/" component={Landing}></Route>
+  <Route path="/alias/:email/:id" component={alias}</Route>
+</Router>
+)
+export default routes
