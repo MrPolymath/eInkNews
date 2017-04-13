@@ -14,6 +14,7 @@ const sendEmail = (email, content) => {
     mailgun.messages().send(data, function (error, body) {
       if (error){
         console.log(error);
+        resolve(false);
       }
       console.log(body);
       resolve(true)
