@@ -3,7 +3,7 @@ import styles from './HeroLanding.css'
 import {Grid, Row, Col} from 'react-flexbox-grid/lib/index'
 
 // import own components
-import Form from './../Form/Form'
+import Form from './Form/Form'
 
 const HeroLanding = (props) =>{
   return (
@@ -22,6 +22,8 @@ const HeroLanding = (props) =>{
         <Form
           submitForm={props.submitForm}
           email={props.email}
+          kindleEmail={props.kindleEmail}
+          updateKindleEmail={props.updateKindleEmail}
           subscriptions={props.subscriptions}
           addSubscription={props.addSubscription}
           deleteSubscription={props.deleteSubscription}

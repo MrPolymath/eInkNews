@@ -5,6 +5,7 @@ import { routerReducer as routing } from 'react-router-redux'
 import { combineReducers } from 'redux'
 
 const defaultLandingState = {
+  kindleEmail: '',
   email: '',
   subscriptions: [],
   submiting: false,
@@ -49,6 +50,11 @@ const landing = (state = defaultLandingState, action) => {
   if (type === ActionTypes.UPDATE_EMAIL) {
     return merge({}, state, {
       email: payload.email
+    })
+  }
+  if (type === ActionTypes.UPDATE_KINDLE_EMAIL) {
+    return merge({}, state, {
+      kindleEmail: payload.kindleEmail
     })
   }
   if (type === ActionTypes.RECEIVED_URL) {

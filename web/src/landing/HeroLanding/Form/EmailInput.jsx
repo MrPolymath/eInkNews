@@ -17,7 +17,7 @@ const EmailInput = (props) => (
   <div>
     <TextField
       fullWidth={true}
-      floatingLabelText="email"
+      floatingLabelText={props.label}
       floatingLabelStyle={styles.floatingLabelStyle}
       inputStyle={styles.inputStyle}
       onChange={props.handleChange}

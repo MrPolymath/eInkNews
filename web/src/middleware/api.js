@@ -5,12 +5,13 @@ const asyncCallsToApi = store => next => action => {
   switch (action.type) {
     case 'SUBMIT_FORM':
       request
-        .post('https://einknews-api.herokuapp.com/users')
+        .post('http://localhost:3001/register')
         .type('form')
         .send({
           email: action.payload.email,
           subscriptions: action.payload.subscriptions,
-          bundleType: action.payload.bundleType
+          bundleType: action.payload.bundleType,
+          kindleEmail: action.payload.kindleEmail
          })
         .end(function(err, res){
           if (err || !res.ok) {
@@ -28,7 +29,7 @@ const asyncCallsToApi = store => next => action => {
       break
     case 'GET_SUBS_FROM_DB':
       request
-        .get('https://einknews-api.herokuapp.com/sources')
+        .get('http://localhost:3001/sources')
         .end(function(err, res){
           if (err || !res.ok) {
           //  handle error calling API

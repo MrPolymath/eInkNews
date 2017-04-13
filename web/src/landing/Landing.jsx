@@ -6,10 +6,11 @@ import HeroLanding from './HeroLanding/HeroLanding'
 import GetLinkDialog from './GetLinkDialog/GetLinkDialog'
 
 // import actions
-import {submitForm, updateEmail, addSubscription, deleteSubscription, selectDevice, closeDialog, getSubsFromDB} from  './../actions'
+import {submitForm, updateEmail, updateKindleEmail, addSubscription, deleteSubscription, selectDevice, closeDialog, getSubsFromDB} from  './../actions'
 
 const mapStateToProps = (state) => {
   return {
+    kindleEmail: state.landing.kindleEmail,
     email: state.landing.email,
     subscriptions: state.landing.subscriptions,
     submited: state.landing.submited,
@@ -21,12 +22,13 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    submitForm: (email, subscriptions, device) => dispatch(submitForm(email, subscriptions, device)),
+    submitForm: (email, subscriptions, device, kindleEmail) => dispatch(submitForm(email, subscriptions, device, kindleEmail)),
     addSubscription: (event, index, value) => dispatch(addSubscription(event, index, value)),
     deleteSubscription: (key) => dispatch(deleteSubscription(key)),
     selectDevice: (event, index, value) => dispatch(selectDevice(event, index, value)),
     closeDialog: () => dispatch(closeDialog()),
     updateEmail: (event) => dispatch(updateEmail(event)),
+    updateKindleEmail: (event) => dispatch(updateKindleEmail(event)),
     getSubsFromDB: () => dispatch(getSubsFromDB())
   }
 }
@@ -48,6 +50,8 @@ class Landing extends Component {
             selectDevice={this.props.selectDevice}
             device={this.props.device}
             updateEmail={this.props.updateEmail}
+            updateKindleEmail={this.props.updateKindleEmail}
+            kindleEmail={this.props.kindleEmail}
             sources={this.props.sources}
           />
           {/* The following dialog controls if its open or not itself */}
