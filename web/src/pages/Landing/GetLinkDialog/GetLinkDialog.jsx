@@ -1,7 +1,7 @@
 import React from 'react'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
-import loading from './../../assets/gears.svg'
+import loading from '../../../assets/gears.svg'
 
 const GetLinkDialog = (props) => {
   const actions = [

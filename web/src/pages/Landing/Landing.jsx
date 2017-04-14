@@ -6,7 +6,7 @@ import HeroLanding from './HeroLanding/HeroLanding'
 import GetLinkDialog from './GetLinkDialog/GetLinkDialog'
 
 // import actions
-import {submitForm, updateEmail, updateKindleEmail, addSubscription, deleteSubscription, selectDevice, closeDialog, getSubsFromDB} from  './../actions'
+import {submitForm, updateEmail, updateKindleEmail, addSubscription, deleteSubscription, selectDevice, closeDialog, getSubsFromDB} from  '../../actions'
 
 const mapStateToProps = (state) => {
   return {
