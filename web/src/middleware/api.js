@@ -48,5 +48,20 @@ const asyncCallsToApi = store => next => action => {
       break
   }
 }
+export function updateNickname(email, id, nickname){
+  var that = this;
+  request
+    .post('http://localhost:3001/alias')
+    .type('form')
+    .send({
+      email: email,
+      id: id,
+      nickname: nickname
+     })
+    .end(function(err, res){
+      that.setState({response: res.statusCode})
+    }
+  )
 
+}
 export default asyncCallsToApi
