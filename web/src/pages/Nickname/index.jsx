@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import {Grid,Row,Col} from 'react-flexbox-grid'
 import TextInput from '../../common/components/TextInput.jsx'
+import SubmitButton from '../../common/components/SubmitButton.jsx'
 import style from '../../common/common.css'
-import RaisedButton from 'material-ui/RaisedButton'
 import {updateNickname} from '../../middleware/api'
 
 export default class Nickname extends Component {
@@ -33,11 +33,10 @@ export default class Nickname extends Component {
             <TextInput label='Your Nickname' handleChange={this.changeState} />
           </Col>
           <Col xs={12}>
-            <RaisedButton
+            <SubmitButton
               label="Send"
-              onTouchTap={() => this.updateNickname(this.state.email, this.state.id, this.state.nickname)}
-              primary={true} style={{marginTop:'60px',  borderRadius:'20px' }} labelStyle={{fontSize:'20px',height: '40px', marginTop:'10px',  borderRadius:'20px' }}
-              buttonStyle={{height:'45px', borderRadius:'20px' }} overlayStyle={{height:'40px',paddingLeft:'20px',paddingRight:'20px', paddingTop:'5px', borderRadius:'20px' }}/>
+              handleTap={this.updateNickname(this.state.email, this.state.id, this.state.nickname)}
+            />
           </Col>
         </Row>
       </Grid>
