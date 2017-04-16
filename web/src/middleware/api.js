@@ -54,14 +54,13 @@ export function updateNickname(email, id, nickname){
     .post('http://localhost:3001/alias')
     .type('form')
     .send({
-      email: email,
-      id: id,
-      nickname: nickname
+      email: that.state.email,
+      id: that.state.id,
+      nickname: that.state.nickname
      })
     .end(function(err, res){
       that.setState({response: res.statusCode})
     }
   )
-
 }
 export default asyncCallsToApi
