@@ -32,7 +32,7 @@ aliasRoutes.post('/', (req, res) => {
                 }
               })
             }else{//already used
-              return res.sendStatus(400)
+              return res.sendStatus(202)
             }
           })
       }
@@ -47,3 +47,4 @@ export default aliasRoutes
 //400 error nuestro
 //403 error del usuario
 //200 actualizaccion
+//202 ya en uso
